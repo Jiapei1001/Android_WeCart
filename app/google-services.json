@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "590027158003",
+    "project_id": "wecart-e691e",
+    "storage_bucket": "wecart-e691e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590027158003:android:ea479130649e9e8b7f6286",
+        "android_client_info": {
+          "package_name": "edu.neu.firebase.wecart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590027158003-tdo8uv5ncgj38edd5n6lvjumdati7dqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDprQSWVX8-7cOqN1VZTNwr8g4uJ46vsco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590027158003-tdo8uv5ncgj38edd5n6lvjumdati7dqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
