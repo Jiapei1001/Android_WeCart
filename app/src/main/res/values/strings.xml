@@ -5,4 +5,6 @@
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
     <string name="brand">Brand</string>
+    <string name="not_in_stock_message">The product is in not stock.</string>
+    <string name="in_stock_message">The product is in stock, please edit the info below</string>
 </resources>

@@ -2,15 +2,25 @@ package edu.neu.firebase.wecart;
 
 public class Product {
 
+    private int productId;
     private String productName;
     private String productBrand;
     private String productStore;
     private long price;
     private int quantity;
     private String productImageId;
+    private Boolean inStock;
 
     public Product() {
         // Default constructor
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
@@ -59,5 +69,27 @@ public class Product {
 
     public void setProductImageId(String productImageId) {
         this.productImageId = productImageId;
+    }
+
+    public Boolean getInStock() {
+        return inStock;
+    }
+
+    public void setInStock(Boolean inStock) {
+        this.inStock = inStock;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", productBrand='" + productBrand + '\'' +
+                ", productStore='" + productStore + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", productImageId='" + productImageId + '\'' +
+                ", inStock=" + inStock +
+                '}';
     }
 }
