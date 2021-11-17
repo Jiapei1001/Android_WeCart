@@ -50,10 +50,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginBottom="424dp" />
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="466dp" />
 
     <LinearLayout
         android:id="@+id/linearlayout"
@@ -125,6 +125,7 @@
             android:ems="10"
             android:hint="Price"
             android:inputType="numberDecimal"
+            android:digits="0123456789."
             android:text="" />
 
         <EditText

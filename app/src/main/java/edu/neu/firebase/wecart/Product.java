@@ -6,7 +6,7 @@ public class Product {
     private String productName;
     private String productBrand;
     private String productStore;
-    private long price;
+    private double price;
     private int quantity;
     private String productImageId;
     private Boolean inStock;
@@ -47,11 +47,11 @@ public class Product {
         this.productStore = productStore;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

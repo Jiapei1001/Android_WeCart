@@ -61,6 +61,8 @@ public class AddingProductActivity extends AppCompatActivity {
 
     Uri productImageUri;
 
+    String productImageId;
+
     StorageReference mStorageRef;
 
     @Override
@@ -161,9 +163,9 @@ public class AddingProductActivity extends AppCompatActivity {
                         inStockTxt.setText(R.string.in_stock_message);
                     }
                 } else {
+                    existedProduct = null;
                     inStockTxt.setText(R.string.not_in_stock_message);
                 }
-
             }
 
 
@@ -200,6 +202,7 @@ public class AddingProductActivity extends AppCompatActivity {
                             mProducts.child(key).child("quantity").setValue(product.getQuantity());
                         } else if (existedProduct.getPrice() != product.getPrice()) {
                             mProducts.child(key).child("price").setValue(product.getPrice());
+
                             // TODO: update product image (check if the image is tge sane ibe)
                         } else if (existedProduct.getProductImageId() == null) {
                             mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
@@ -220,13 +223,13 @@ public class AddingProductActivity extends AppCompatActivity {
 
     private void productInfoUploader() {
 
-        String productImageId;
-        productImageId = "images/" + UUID.randomUUID().toString() + "." + getExtension(productImageUri);
-
+        // If an image is uploaded
         if (productImageUri != null) {
+            productImageId = "images/" + UUID.randomUUID().toString() + "." + getExtension(productImageUri);
             // Create a reference to store the image in firebase storage
             // it will be stored inside images folder in firebase storage
             StorageReference reference = mStorageRef.child(productImageId);
+
             // TODO: can use user auth id instead of uuid if the app has firebase auth or use System.currentTimeMillis()
 
             // Store the file
@@ -254,7 +257,7 @@ public class AddingProductActivity extends AppCompatActivity {
         product.setProductBrand(productBrandTxt.getText().toString().trim());
 
         // Set product price
-        long productPrice = (long) Double.parseDouble(priceTxt.getText().toString().trim());
+        double productPrice = Double.parseDouble(priceTxt.getText().toString().trim());
         product.setPrice(productPrice);
 
         // TODO: Plus and minus button with EditText
@@ -297,5 +300,4 @@ public class AddingProductActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-
 }
