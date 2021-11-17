@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -31,11 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import com.google.firebase.database.DatabaseReference;
-import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -103,7 +100,8 @@ public class AddingProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (productIdTxt != null) {
+                // check if productIdTxt EditText is empty or not
+                if (!productIdTxt.getText().toString().matches("")) {
                     getProductData();
                 } else {
                     Toast.makeText(AddingProductActivity.this, "Please input the product " +
@@ -152,7 +150,11 @@ public class AddingProductActivity extends AppCompatActivity {
                         productBrandTxt.setText(existedProduct.getProductBrand());
                         priceTxt.setText(String.valueOf(existedProduct.getPrice()));
                         quantityTxt.setText(String.valueOf(existedProduct.getQuantity()));
-                        // TODO: Show existed
+
+                        // Show Picture that retrieved from Firebase Storage using Glide
+                        StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(existedProduct.getProductImageId()));
+                        Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
+
                         inStockTxt.setText(R.string.in_stock_message);
                     } else {
                         inStockTxt.setText(R.string.not_in_stock_message);
