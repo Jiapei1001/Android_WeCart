@@ -104,6 +104,7 @@ public class AddingProductActivity extends AppCompatActivity {
                 if (!productIdTxt.getText().toString().matches("")) {
                     getProductData();
                 } else {
+                    // If there is no input
                     Toast.makeText(AddingProductActivity.this, "Please input the product " +
                             "id to check the stock status.", Toast.LENGTH_SHORT).show();
                 }
@@ -137,11 +138,13 @@ public class AddingProductActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Even when there is only a single match for the query, the snapshot is still a
-                // list; it just contains a single item. To access the item, you need to loop over
-                // the result
-                for (DataSnapshot productSnapshot: snapshot.getChildren()) {
-                    if (productSnapshot.exists()) {
+                // check if the firebase query is not empty
+                if (snapshot.exists()) {
+                    // Even when there is only a single match for the query, the snapshot is still a
+                    // list; it just contains a single item. To access the item, you need to loop over
+                    // the result
+                    for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+
                         existedProduct = productSnapshot.getValue(Product.class);
 
                         // When the product exists, just display the info in EditText
@@ -156,10 +159,11 @@ public class AddingProductActivity extends AppCompatActivity {
                         Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
 
                         inStockTxt.setText(R.string.in_stock_message);
-                    } else {
-                        inStockTxt.setText(R.string.not_in_stock_message);
                     }
+                } else {
+                    inStockTxt.setText(R.string.not_in_stock_message);
                 }
+
             }
 
 
@@ -182,7 +186,7 @@ public class AddingProductActivity extends AppCompatActivity {
                 // Even when there is only a single match for the query, the snapshot is still a
                 // list; it just contains a single item. To access the item, you need to loop over
                 // the result
-                for (DataSnapshot productSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
                     if (productSnapshot.exists()) {
                         existedProduct = productSnapshot.getValue(Product.class);
                         String key = productSnapshot.getKey();
@@ -196,6 +200,7 @@ public class AddingProductActivity extends AppCompatActivity {
                             mProducts.child(key).child("quantity").setValue(product.getQuantity());
                         } else if (existedProduct.getPrice() != product.getPrice()) {
                             mProducts.child(key).child("price").setValue(product.getPrice());
+                            // TODO: update product image (check if the image is tge sane ibe)
                         } else if (existedProduct.getProductImageId() == null) {
                             mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
                         }
