@@ -61,7 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,19 +68,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void upload() {
 
-
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, 10);
-
-
-
     }
 
     private void signup() {
@@ -125,7 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
