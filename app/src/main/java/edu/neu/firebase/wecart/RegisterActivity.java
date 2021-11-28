@@ -38,10 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         get_user_type = (RadioGroup) findViewById(R.id.get_type);
-        password=findViewById(R.id.editPassword);
-        name=findViewById(R.id.editUsername);
-        profile=findViewById(R.id.img_profile);
-        btn=findViewById(R.id.button_register_user);
+        password = findViewById(R.id.editPassword);
+        name = findViewById(R.id.editUsername);
+        profile = findViewById(R.id.img_profile);
+        btn = findViewById(R.id.button_register_user);
 
         get_user_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -59,6 +59,12 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (name.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "Please enter user Name!  :)", Toast.LENGTH_SHORT).show();
+                }else if (password.length() == 0) {
+                    Toast.makeText(RegisterActivity.this, "Please enter Password!  :)", Toast.LENGTH_SHORT).show();
+                }else if (user_type.length() == 0){
+                    Toast.makeText(RegisterActivity.this, "Please Choose User type!  :)", Toast.LENGTH_SHORT).show();
+                }else if (profile == null){
+                    Toast.makeText(RegisterActivity.this, "Please upload user picture!  :)", Toast.LENGTH_SHORT).show();
                 }else{
                         signup();
                     }
@@ -97,26 +103,27 @@ public class RegisterActivity extends AppCompatActivity {
                                 storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Uri> task) {
-                                        String profile_image=task.toString();
-                                        User user=new User();
+                                        String profile_image = task.toString();
+                                        User user = new User();
                                         user.user_type = user_type;
                                         user.username = name.getText().toString();
                                         user.password = password.getText().toString();
                                         user.profile_image = profile_image;
                                         user.uid = uid;
-
                                         FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
+                                        Toast.makeText(RegisterActivity.this,"Success Create",Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                                     }
                                 });
                             }else{
 
-                                Toast.makeText(RegisterActivity.this,"error",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this,"error on upload",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }else{
 
-                    Toast.makeText(RegisterActivity.this,"error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"Error on email name!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
