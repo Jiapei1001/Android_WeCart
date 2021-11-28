@@ -5,6 +5,7 @@ public class User {
     public String user_type;
     public String profile_image;
     public String password;
+    public String uid;
 
     public User() {
         // Default constructor
@@ -15,6 +16,7 @@ public class User {
         this.user_type = user_type;
         this.profile_image = profile_image;
         this.password = password;
+        this.uid = uid;
     }
 
     public String getUsername() {

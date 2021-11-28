@@ -47,9 +47,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.get_shop){
-                    user_type = "Shop Owner";
+                    user_type = "Seller";
                 }else if (checkedId == R.id.get_user){
-                    user_type = "Normal User";
+                    user_type = "User";
                 }
             }
         });
@@ -57,7 +57,11 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signup();
+                if (name.length() == 0) {
+                    Toast.makeText(RegisterActivity.this, "Please enter user Name!  :)", Toast.LENGTH_SHORT).show();
+                }else{
+                        signup();
+                    }
             }
         });
 
@@ -99,10 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
                                         user.username = name.getText().toString();
                                         user.password = password.getText().toString();
                                         user.profile_image = profile_image;
+                                        user.uid = uid;
 
-                                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                        DatabaseReference mUserReference = mDatabase.child("users");
-                                        mUserReference.child(user.username).setValue(user);
+                                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
                                     }
                                 });
                             }else{
