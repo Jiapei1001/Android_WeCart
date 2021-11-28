@@ -13,9 +13,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +42,7 @@ import java.util.UUID;
 /**
  * Upload image to firebase storage (ref: https://www.youtube.com/watch?v=7p4MBsz__ao)
  */
-public class AddingProductActivity extends AppCompatActivity {
+public class AddingProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button selectProductButton, submitButton, checkProductIdButton;
     ImageView productImage;
 
@@ -50,6 +53,9 @@ public class AddingProductActivity extends AppCompatActivity {
     EditText quantityTxt;
     TextView productStoreTxt;
     TextView inStockTxt;
+
+    Spinner UnitChoiceSpinner;
+    String productUnit;
 
     String productStore;
     Product product;
@@ -71,7 +77,7 @@ public class AddingProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_adding_product);
 
         // TODO: productStore should be passed from the previous screen
-        String productStore = "Super QQ Fruit Store";
+        productStore = "Super QQ Fruit Store";
 
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
@@ -93,8 +99,25 @@ public class AddingProductActivity extends AppCompatActivity {
         productStoreTxt = findViewById(R.id.textViewStore);
         productStoreTxt.setText(productStore);
 
+        // Using spinners to do the product unit Choice
+        // Take the instance of Spinner and apply OnItemSelectedListener on it which tells which item
+        // of spinner is clicked.
+        UnitChoiceSpinner = (Spinner) findViewById(R.id.spinnerUnitChoice);
+        UnitChoiceSpinner.setOnItemSelectedListener(this);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,
+                R.array.unit_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        UnitChoiceSpinner.setAdapter(arrayAdapter);
+
         // create a new product
         product = new Product();
+
+        product.setProductStore(productStore);
 
         // check if product id exists
         checkProductIdButton = findViewById(R.id.btnCheckId);
@@ -132,6 +155,20 @@ public class AddingProductActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+        productUnit = parent.getItemAtPosition(pos).toString();
+        product.setProductUnit(productUnit);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
     private void getProductData() {
         // Set product id
         int curProductId = Integer.parseInt(productIdTxt.getText().toString());
@@ -156,6 +193,9 @@ public class AddingProductActivity extends AppCompatActivity {
                         priceTxt.setText(String.valueOf(existedProduct.getPrice()));
                         quantityTxt.setText(String.valueOf(existedProduct.getQuantity()));
 
+                        // Todo: Assign the specific unit to spinners
+
+
                         // Show Picture that retrieved from Firebase Storage using Glide
                         StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(existedProduct.getProductImageId()));
                         Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
@@ -167,7 +207,6 @@ public class AddingProductActivity extends AppCompatActivity {
                     inStockTxt.setText(R.string.not_in_stock_message);
                 }
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -202,8 +241,9 @@ public class AddingProductActivity extends AppCompatActivity {
                             mProducts.child(key).child("quantity").setValue(product.getQuantity());
                         } else if (existedProduct.getPrice() != product.getPrice()) {
                             mProducts.child(key).child("price").setValue(product.getPrice());
-
-                            // TODO: update product image (check if the image is tge sane ibe)
+                        } else if (!existedProduct.getProductUnit().equals(product.getProductUnit())) {
+                            mProducts.child(key).child("productUnit").setValue(product.getProductUnit());
+                            // TODO: update product image (check if the image is the same one)
                         } else if (existedProduct.getProductImageId() == null) {
                             mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
                         }
@@ -265,8 +305,11 @@ public class AddingProductActivity extends AppCompatActivity {
         int productQuantity = Integer.parseInt(quantityTxt.getText().toString().trim());
         product.setQuantity(productQuantity);
 
-        product.setProductStore(productStore);
+        if (!productUnit.isEmpty()) {
+            product.setProductUnit(productUnit);
+        }
 
+        // If the product exists, just update the product data
         if (existedProduct != null) {
             updateProductData();
         } else {

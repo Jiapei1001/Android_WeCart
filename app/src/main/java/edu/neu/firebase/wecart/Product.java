@@ -10,6 +10,7 @@ public class Product {
     private int quantity;
     private String productImageId;
     private Boolean inStock;
+    private String productUnit;
 
     public Product() {
         // Default constructor
@@ -79,6 +80,14 @@ public class Product {
         this.inStock = inStock;
     }
 
+    public String getProductUnit() {
+        return productUnit;
+    }
+
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -90,6 +99,7 @@ public class Product {
                 ", quantity=" + quantity +
                 ", productImageId='" + productImageId + '\'' +
                 ", inStock=" + inStock +
+                ", productUnit='" + productUnit + '\'' +
                 '}';
     }
 }
