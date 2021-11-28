@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainActivity.this,Jump.class));
 
                             } else {
-                                Toast.makeText(MainActivity.this,"Password don't match!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this,"Password doesn't match!",Toast.LENGTH_SHORT).show();
                             }
 
                             // ...

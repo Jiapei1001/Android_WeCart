@@ -117,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 });
                             }else{
 
-                                Toast.makeText(RegisterActivity.this,"error on upload",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this,"Error on upload Data",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
