@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Toast;
 
+
+import edu.neu.firebase.wecart.market.MarketActivity;
+
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         userAuth = FirebaseAuth.getInstance();
 
@@ -42,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
                 loginEvent();
 
-            }
-        });
+       
     }
 
         private void loginEvent() {
