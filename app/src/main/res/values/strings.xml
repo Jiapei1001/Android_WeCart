@@ -25,6 +25,7 @@
     <string name="price_and_quantity">Price and Quantity</string>
     <string name="per">per</string>
     <string name="check_stock_status">Check Stock Status</string>
+    <string name="delete_success">Delete Product Successfully</string>
     <string-array name="unit_array">
         <item>lb</item>
         <item>pc</item>

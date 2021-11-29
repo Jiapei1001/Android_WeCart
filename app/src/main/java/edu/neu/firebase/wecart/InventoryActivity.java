@@ -2,6 +2,7 @@ package edu.neu.firebase.wecart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     private InventoryAdapter inventoryAdapter;
     private final ArrayList<Product> productList = new ArrayList<>();
+    RecyclerView inventoryRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class InventoryActivity extends AppCompatActivity {
         ValueEventListener productListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("Product count: ", "" + snapshot.getChildrenCount());
+                Log.e("Product count", "" + snapshot.getChildrenCount());
 
                 productList.clear();
                 for (DataSnapshot productSnapShot : snapshot.getChildren()) {
@@ -76,6 +79,31 @@ public class InventoryActivity extends AppCompatActivity {
             }
         };
         mProducts.addValueEventListener(productListener);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper
+                .SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                // cannot move
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // Swipe right or left -> delete
+                int position = viewHolder.getLayoutPosition();
+                // Delete the product from productList
+                productList.remove(position);
+                inventoryAdapter.notifyItemRemoved(position);
+                // Todo: Delete the product from firebase realtime database
+                Snackbar.make(inventoryRecyclerView, getString(R.string.delete_success), Snackbar.LENGTH_LONG).show();
+                // Notify any registered observers that the item previously located at
+                // position has been removed from the data set.
+                inventoryAdapter.notifyItemRemoved(position);
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(inventoryRecyclerView);
     }
 
     // Call on create option menu
@@ -129,7 +157,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     private void createRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerView inventoryRecyclerView = (RecyclerView) this.findViewById(R.id.recyclerViewInventory);
+        inventoryRecyclerView = (RecyclerView) this.findViewById(R.id.recyclerViewInventory);
         inventoryRecyclerView.setHasFixedSize(true);
         this.inventoryAdapter = new InventoryAdapter(this.productList, this);
         inventoryRecyclerView.setAdapter(this.inventoryAdapter);
