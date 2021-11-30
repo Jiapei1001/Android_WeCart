@@ -6,6 +6,7 @@
     android:padding="10dp"
     android:background="#FFF8E5">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/msg_recycler_view"
         android:layout_width="match_parent"
