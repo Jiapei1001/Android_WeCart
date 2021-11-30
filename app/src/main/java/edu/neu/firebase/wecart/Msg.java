@@ -10,6 +10,7 @@ public class Msg {
         this.content = content;
         this.type = type;
     }
+
     public String getContent() {
         return content;
     }

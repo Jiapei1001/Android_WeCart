@@ -12,7 +12,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity {
+public class SellerChatActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private List<Msg> msgList = new ArrayList<>();
     private RecyclerView msgRecyclerView;
@@ -47,17 +47,17 @@ public class ChatActivity extends AppCompatActivity {
                 }
 //sample chat
                 if(msgList.size() == 2){
-                    msgList.add(new Msg("What's your name?",Msg.TYPE_RECEIVED));
+                    msgList.add(new Msg("I donno how to cancel order",Msg.TYPE_RECEIVED));
                     adapter.notifyItemInserted(msgList.size()-1);
                     msgRecyclerView.scrollToPosition(msgList.size()-1);
                 }
                 if(msgList.size() == 4){
-                    msgList.add(new Msg("Any other questions?",Msg.TYPE_RECEIVED));
+                    msgList.add(new Msg("Can you help me to cancel it?",Msg.TYPE_RECEIVED));
                     adapter.notifyItemInserted(msgList.size()-1);
                     msgRecyclerView.scrollToPosition(msgList.size()-1);
                 }
                 if(msgList.size() == 6){
-                    msgList.add(new Msg("Question recorded, bye!",Msg.TYPE_RECEIVED));
+                    msgList.add(new Msg("I am ok now, thank you!",Msg.TYPE_RECEIVED));
                     adapter.notifyItemInserted(msgList.size()-1);
                     msgRecyclerView.scrollToPosition(msgList.size()-1);
                 }
@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private List<Msg> getData(){
         List<Msg> list = new ArrayList<>();
-        list.add(new Msg("Hi, what can I do for you?",Msg.TYPE_RECEIVED));
+        list.add(new Msg("Hi, I need help.",Msg.TYPE_RECEIVED));
         return list;
     }
 }
