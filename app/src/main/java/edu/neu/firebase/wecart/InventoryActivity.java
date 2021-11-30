@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 /**
  * List all product as inventory
  */
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements ProductCardClickListener {
 
     private InventoryAdapter inventoryAdapter;
     private final ArrayList<Product> productList = new ArrayList<>();
@@ -165,8 +166,16 @@ public class InventoryActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         inventoryRecyclerView = (RecyclerView) this.findViewById(R.id.recyclerViewInventory);
         inventoryRecyclerView.setHasFixedSize(true);
-        this.inventoryAdapter = new InventoryAdapter(this.productList, this);
+        this.inventoryAdapter = new InventoryAdapter(getApplicationContext(), this.productList, this);
         inventoryRecyclerView.setAdapter(this.inventoryAdapter);
         inventoryRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void onEditProductClick(int position) {
+        Intent intentEditProduct = new Intent(this, EditProductActivity.class);
+        intentEditProduct.putExtra("curProductId", productList.get(position).getProductId());
+
+        startActivity(intentEditProduct);
     }
 }
