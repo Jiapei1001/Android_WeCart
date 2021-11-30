@@ -32,8 +32,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     def nav_version = "2.3.5"
 
     implementation 'androidx.appcompat:appcompat:1.4.0'
@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Wave Animation
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0'
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     // Testing Navigation
