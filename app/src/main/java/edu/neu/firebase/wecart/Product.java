@@ -11,6 +11,16 @@ public class Product {
     private String productImageId;
     private Boolean inStock;
 
+    private int totalInCart;
+
+    public int getTotalInCart() {
+        return totalInCart;
+    }
+
+    public void setTotalInCart(int totalInCart) {
+        this.totalInCart = totalInCart;
+    }
+
     public Product() {
         // Default constructor
     }
