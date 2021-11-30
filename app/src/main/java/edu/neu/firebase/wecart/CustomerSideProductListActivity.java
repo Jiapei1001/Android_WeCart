@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,15 +51,26 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(getIntent() != null){
-            int curProductId = Integer.parseInt(productIdTxt.getText().toString());
-            if(!productIdTxt.getText().toString().matches("")){
+            //int curProductId = Integer.parseInt(productIdTxt.getText().toString());
+            String curProductId = String.valueOf(getIntent().getStringExtra("productId"));
+            if(!curProductId.isEmpty() && curProductId != null){
                 loadProduct(curProductId);
             }
         }
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cartIntent = new Intent(CustomerSideProductListActivity.this,CartActivity.class);
+                startActivity(cartIntent);
+            }
+
+        });
+
     }
 
-    private void loadProduct(int curProductId) {
+    private void loadProduct(String curProductId) {
         // Check if the product exists in firebase database by the product id
         Query query = mProducts.orderByChild("productId").equalTo(curProductId);
 
@@ -68,7 +80,6 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
                         .build();
 
         adapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options){
-
 
             @Override
             public ProductViewHolder onCreateViewHolder(ViewGroup parent, int i) {
@@ -86,13 +97,13 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
                 holder.txtProductPrice.setText(String.valueOf(p.getPrice()));
                 Picasso.get().load(p.getProductImageId())
                         .into(holder.imgProduct);
-                final Product clickItem = p;
+
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent productDetails = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
-                        productDetails.putExtra("productId",adapter.getRef(position).getKey());
-                        startActivity(productDetails);
+                        Intent CustomerSideProductDetailsActivity = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
+                        CustomerSideProductDetailsActivity.putExtra("productId",adapter.getRef(position).getKey());
+                        startActivity(CustomerSideProductDetailsActivity);
                     }
                 });
             }

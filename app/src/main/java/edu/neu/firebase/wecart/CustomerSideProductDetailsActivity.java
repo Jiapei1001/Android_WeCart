@@ -65,7 +65,8 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
         productImage = findViewById(R.id.product_image);
 
         if (getIntent() != null) {
-            productId = getIntent().getStringExtra("productId");
+            //productId = getIntent().getStringExtra("productId");
+            productId = "1";
             if (!productId.isEmpty()) {
                 getDetailProduct(productId);
             }
