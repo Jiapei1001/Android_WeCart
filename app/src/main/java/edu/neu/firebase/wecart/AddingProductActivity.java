@@ -5,6 +5,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

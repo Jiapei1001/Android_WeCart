@@ -2,27 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_seller_home">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="edu.neu.firebase.wecart.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/navigation_seller_home"
+        android:name="edu.neu.firebase.wecart.fragments.SellerHomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_seller_home" />
 
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="edu.neu.firebase.wecart.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/navigation_seller_orders"
+        android:name="edu.neu.firebase.wecart.fragments.SellerOrdersFragment"
+        android:label="Orders"
+        tools:layout="@layout/fragment_seller_orders" />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+    <fragment
+        android:id="@+id/navigation_seller_chat"
+        android:name="edu.neu.firebase.wecart.fragments.SellerChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_seller_home" />
+
+    <fragment
+        android:id="@+id/navigation_seller_profile"
+        android:name="edu.neu.firebase.wecart.fragments.SellerProfileFragment"
+        android:label="Profiles"
+        tools:layout="@layout/fragment_seller_profile" />
+
+
 </navigation>

@@ -2,6 +2,10 @@ package edu.neu.firebase.wecart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +20,7 @@ import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
