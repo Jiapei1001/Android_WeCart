@@ -97,6 +97,7 @@ public class InventoryActivity extends AppCompatActivity {
                 productList.remove(position);
                 inventoryAdapter.notifyItemRemoved(position);
                 // Todo: Delete the product from firebase realtime database
+
                 Snackbar.make(inventoryRecyclerView, getString(R.string.delete_success), Snackbar.LENGTH_LONG).show();
                 // Notify any registered observers that the item previously located at
                 // position has been removed from the data set.
