@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     EditText name;  //Create Username
     EditText passwd;  //Create Password
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 loginEvent();
            }
         });
-       
+
     }
 
         private void loginEvent() {
@@ -69,3 +71,4 @@ public class MainActivity extends AppCompatActivity {
                     });
 
             }}
+
