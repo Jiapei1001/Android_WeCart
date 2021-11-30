@@ -75,7 +75,7 @@ public class CartActivity extends AppCompatActivity {
                     requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
                     //Delete Cart
-                    new Database(getBaseContext()).cleneCart();
+                    new Database(getBaseContext()).cleanCart();
                     Toast.makeText(CartActivity.this,"Successfully Ordered!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
