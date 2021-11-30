@@ -28,7 +28,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
     public TextView txtProductDescription;
     public TextView txtProductPrice;
     public ImageView imgProduct;
-    public EditText productIdTxt;
+    public TextView productIdTxt;
 
     private ItemClickListener itemClickListener;
 

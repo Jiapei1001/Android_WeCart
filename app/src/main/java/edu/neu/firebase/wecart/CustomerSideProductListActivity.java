@@ -2,9 +2,9 @@ package edu.neu.firebase.wecart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,10 +19,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -31,30 +32,34 @@ import java.util.Objects;
 public class CustomerSideProductListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    EditText productIdTxt;
 
     private DatabaseReference mDatabase;
     private DatabaseReference mProducts;
 
     FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
 
+    String StoreId = "Super QQ Fruit Store";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_side_product_list);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mProducts = mDatabase.child("products");
+        mDatabase = FirebaseDatabase.getInstance().getReference("products");
 
         RecyclerView recyclerView = findViewById(R.id.recycler_product);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         if(getIntent() != null){
             //int curProductId = Integer.parseInt(productIdTxt.getText().toString());
-            String curProductId = String.valueOf(getIntent().getStringExtra("productId"));
-            if(!curProductId.isEmpty() && curProductId != null){
-                loadProduct(curProductId);
+//            String curProductId = getIntent().getStringExtra("StoreId");
+//            System.out.println("----------");
+//            System.out.println(curProductId);
+//            System.out.println("----------");
+            if(!StoreId.isEmpty()){
+                loadProduct(StoreId);
             }
         }
 
@@ -70,9 +75,11 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
 
     }
 
-    private void loadProduct(String curProductId) {
+    private void loadProduct(String StoreId) {
         // Check if the product exists in firebase database by the product id
-        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+        //Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("products").orderByChild("productStore").equalTo(StoreId);
 
         FirebaseRecyclerOptions<Product> options =
                 new FirebaseRecyclerOptions.Builder<Product>()
@@ -91,7 +98,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(ProductViewHolder holder, int position, Product p) {
-                holder.productIdTxt.setText(String.valueOf(Objects.requireNonNull(p).getProductId()));
+                holder.productIdTxt.setText(String.valueOf(p.getProductId()));
                 holder.txtProductName.setText(p.getProductName());
                 holder.txtProductDescription.setText(p.getProductBrand());
                 holder.txtProductPrice.setText(String.valueOf(p.getPrice()));
@@ -102,7 +109,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         Intent CustomerSideProductDetailsActivity = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
-                        CustomerSideProductDetailsActivity.putExtra("productId",adapter.getRef(position).getKey());
+                        CustomerSideProductDetailsActivity.putExtra("ProductId",adapter.getRef(position).getKey());
                         startActivity(CustomerSideProductDetailsActivity);
                     }
                 });
