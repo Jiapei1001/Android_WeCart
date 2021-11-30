@@ -35,9 +35,6 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.milkshake);
 
         // Implement OnClickListener() for buttons
-        Button revenueButton = view.findViewById(R.id.btnRevenue);
-        revenueButton.setOnClickListener(this);
-        revenueButton.setAnimation(myAnim);
         Button addingProductButton = view.findViewById(R.id.btnAddProduct);
         addingProductButton.setOnClickListener(this);
         addingProductButton.setAnimation(myAnim);
@@ -50,6 +47,9 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         Button orderButton = view.findViewById(R.id.btnOrderCenter);
         orderButton.setOnClickListener(this);
         orderButton.setAnimation(myAnim);
+        Button revenueButton = view.findViewById(R.id.btnRevenue);
+        revenueButton.setOnClickListener(this);
+        revenueButton.setAnimation(myAnim);
 
         return view;
     }
@@ -62,7 +62,6 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
 //            Intent intentClicky = new Intent(this, ClickyClickyActivity.class);
 //            startActivity(intentClicky);
         } else if (id == R.id.btnAddProduct) {
-
             Intent intentAddingProduct = new Intent(getActivity(), AddingProductActivity.class);
             getActivity().startActivity(intentAddingProduct);
         } else if (id == R.id.btnImportProducts) {

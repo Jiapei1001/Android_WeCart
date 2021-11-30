@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,11 +25,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     // Create a variable for ArrayList anc context
     private ArrayList<Product> productList;
+    private final ProductCardClickListener productCardClickListener;
     private Context context;
 
-    public InventoryAdapter(ArrayList<Product> productList, Context context) {
-        this.productList = productList;
+    public InventoryAdapter(Context context, ArrayList<Product> productList, ProductCardClickListener productCardClickListener) {
         this.context = context;
+        this.productList = productList;
+        this.productCardClickListener = productCardClickListener;
     }
 
     // This is a method for filtering the inventory RecylerView items
@@ -45,7 +48,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         // Inflate out layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_inventory_product_card,
                 parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, productCardClickListener);
     }
 
     @Override
@@ -57,12 +60,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         Product product = productList.get(position);
         holder.productNameTextView.setText(product.getProductName());
         String productUnit = product.getProductUnit();
+        // There are more than 1 lb or 1 pc products
         int quantity = product.getQuantity();
         if (quantity > 1) {
             productUnit = productUnit + "s";
         }
         holder.productPriceAndQuantityTextView.setText(MessageFormat.format("${0} x {1} {2}",
                 product.getPrice(), product.getQuantity(), productUnit));
+
         // Show Picture that retrieved from Firebase Storage using Glide
         StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(product.getProductImageId()));
         Glide.with(context.getApplicationContext()).load(imagesStorageRef).into(holder.productImageView);
@@ -79,13 +84,28 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         // create variables for our view
         private final TextView productNameTextView, productPriceAndQuantityTextView;
         private final ImageView productImageView;
+        private final Button editProductButton;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final ProductCardClickListener listener) {
             super(itemView);
             // Initialize our views with their ids
             this.productNameTextView = itemView.findViewById(R.id.textViewProductName);
             this.productPriceAndQuantityTextView = itemView.findViewById(R.id.textViewProductPriceAndQuantity);
             this.productImageView = itemView.findViewById(R.id.imgViewProduct);
+            this.editProductButton = itemView.findViewById(R.id.btnEditProduct);
+
+            editProductButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        // Returns the position of the ViewHolder in terms of the latest layout pass
+                        int position = getLayoutPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onEditProductClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

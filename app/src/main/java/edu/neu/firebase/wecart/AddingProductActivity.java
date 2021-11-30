@@ -200,7 +200,6 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
 
                         // Todo: Assign the specific unit to spinners
 
-
                         // Show Picture that retrieved from Firebase Storage using Glide
                         StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(existedProduct.getProductImageId()));
                         Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
