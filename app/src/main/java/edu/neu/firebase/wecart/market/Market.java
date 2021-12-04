@@ -29,6 +29,83 @@ public class Market {
         this.phone = phone;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getStoreBtn() {
+        return storeBtn;
+    }
+
+    public void setStoreBtn(String storeBtn) {
+        this.storeBtn = storeBtn;
+    }
+
+    public String getStoreImage() {
+        return storeImage;
+    }
+
+    public void setStoreImage(String storeImage) {
+        this.storeImage = storeImage;
+    }
+
+    public String getStoreDes() {
+        return storeDes;
+    }
+
+    public void setStoreDes(String storeDes) {
+        this.storeDes = storeDes;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }
