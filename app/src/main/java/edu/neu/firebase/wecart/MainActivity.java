@@ -48,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 loginEvent();
            }
         });
-       
+
+        // temp button for store, will remove
+        Button marketBtn = (Button) findViewById(R.id.marketBtn);
+        marketBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MarketActivity.class);
+            startActivity(intent);
+        });
     }
 
         private void loginEvent() {
