@@ -108,4 +108,20 @@ public class Market {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    @Override
+    public String toString() {
+        return "Market{" +
+                "id=" + id +
+                ", storeName='" + storeName + '\'' +
+                ", storeBtn='" + storeBtn + '\'' +
+                ", storeImage='" + storeImage + '\'' +
+                ", storeDes='" + storeDes + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
