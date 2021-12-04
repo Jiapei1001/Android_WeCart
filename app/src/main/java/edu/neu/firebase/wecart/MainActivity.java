@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import edu.neu.firebase.wecart.market.MarketActivity;
+import edu.neu.firebase.wecart.market.StoreActivity;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,10 +50,17 @@ public class MainActivity extends AppCompatActivity {
            }
         });
 
-        // temp button for store, will remove
+        // temp button for market, will remove
         Button marketBtn = (Button) findViewById(R.id.marketBtn);
         marketBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MarketActivity.class);
+            startActivity(intent);
+        });
+
+        // temp button for store, will remove
+        Button storeBtn = (Button) findViewById(R.id.storeBtn);
+        storeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StoreActivity.class);
             startActivity(intent);
         });
     }
