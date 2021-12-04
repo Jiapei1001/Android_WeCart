@@ -29,6 +29,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <ImageButton
+                android:id="@+id/store01"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="800dp"
+                android:background="@null"
+                android:rotation="-20"
+                android:src="@drawable/store_01"
+                app:layout_constraintEnd_toEndOf="@id/market01"
+                app:layout_constraintHorizontal_bias="0.12"
+                app:layout_constraintStart_toStartOf="@id/market01"
+                app:layout_constraintTop_toTopOf="@id/market01" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
