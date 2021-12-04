@@ -6,10 +6,11 @@ public class Product {
     private String productName;
     private String productBrand;
     private String productStore;
-    private long price;
+    private double price;
     private int quantity;
     private String productImageId;
     private Boolean inStock;
+    private String productUnit;
 
     private int totalInCart;
 
@@ -57,11 +58,11 @@ public class Product {
         this.productStore = productStore;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -87,6 +88,14 @@ public class Product {
 
     public void setInStock(Boolean inStock) {
         this.inStock = inStock;
+    }
+
+    public String getProductUnit() {
+        return productUnit;
+    }
+
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
     }
 
     @Override

@@ -7,4 +7,7 @@
     <string name="brand">Brand</string>
     <string name="not_in_stock_message">The product is in not stock.</string>
     <string name="in_stock_message">The product is in stock, please edit the info below</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
