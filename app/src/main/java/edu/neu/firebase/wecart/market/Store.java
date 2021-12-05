@@ -1,30 +1,46 @@
 package edu.neu.firebase.wecart.market;
 
-public class Market {
+public class Store {
 
-    int id;
-    String storeName;
-    String storeBtn;
-    String storeImage;
-    String storeDes;
-    Double latitude;
-    Double longitude;
-    String ownerImage;
-    String ownerName;
-    String address;
-    String email;
-    String phone;
+    private int storeId;
+    private String storeName;
+    private String storeBtn;
+    private String storeImage;
+    private String storeDes;
+    private Double latitude;
+    private Double longitude;
+    private String ownerImage;
+    private String ownerName;
+    private String address;
+    private String email;
+    private String phone;
 
-    public Market() {
+    public Store() {
         // default constructor
     }
 
-    public int getId() {
-        return id;
+//    public Store(int storeId, String storeName, String storeBtn, String storeImage, String storeDes, Double latitude, Double longitude, String ownerImage, String ownerName, String address, String email, String phone) {
+//        this.storeId = storeId;
+//        this.storeName = storeName;
+//        this.storeBtn = storeBtn;
+//        this.storeImage = storeImage;
+//        this.storeDes = storeDes;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//        this.ownerImage = ownerImage;
+//        this.ownerName = ownerName;
+//        this.address = address;
+//        this.email = email;
+//        this.phone = phone;
+//    }
+
+
+    public int getStoreId() {
+        return storeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public String getStoreName() {
@@ -75,6 +91,22 @@ public class Market {
         this.longitude = longitude;
     }
 
+    public String getOwnerImage() {
+        return ownerImage;
+    }
+
+    public void setOwnerImage(String ownerImage) {
+        this.ownerImage = ownerImage;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -99,26 +131,10 @@ public class Market {
         this.phone = phone;
     }
 
-    public String getOwnerImage() {
-        return ownerImage;
-    }
-
-    public void setOwnerImage(String ownerImage) {
-        this.ownerImage = ownerImage;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
     @Override
     public String toString() {
         return "Market{" +
-                "id=" + id +
+                "id=" + storeId +
                 ", storeName='" + storeName + '\'' +
                 ", storeBtn='" + storeBtn + '\'' +
                 ", storeImage='" + storeImage + '\'' +
