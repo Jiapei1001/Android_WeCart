@@ -54,7 +54,7 @@
             <ImageView
                 android:id="@+id/storeImage"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="280dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="40dp"
@@ -157,7 +157,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/storeEmail"
-                app:srcCompat="@drawable/storeMakeOrder" />
+                app:srcCompat="@drawable/store_make_order" />
 
 
             <ImageView
@@ -172,7 +172,7 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/storeMakeOrder"
-                app:srcCompat="@drawable/storeGoBack" />
+                app:srcCompat="@drawable/store_go_back" />
 
             <ImageView
                 android:id="@+id/storeGoCommunity"
@@ -186,7 +186,7 @@
                 app:layout_constraintHorizontal_bias="0.94"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/storeMakeOrder"
-                app:srcCompat="@drawable/storeGoCommunity" />
+                app:srcCompat="@drawable/store_go_community" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
