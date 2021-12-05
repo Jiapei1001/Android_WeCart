@@ -46,10 +46,10 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     private String idToString(int id) {
-        @SuppressLint("ResourceType") String storeName = getString(id);
-        System.out.println(storeName);
-        String storeId = storeName.replace("store", "");
-        System.out.println(storeId);
+        String storeName = getResources().getResourceName(id);
+
+        String[] storeSplit = storeName.split("id/");
+        String storeId = storeSplit[1].replace("store", "");
 
         return storeId;
     }
