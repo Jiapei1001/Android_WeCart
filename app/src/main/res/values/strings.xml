@@ -28,7 +28,7 @@
     <string name="delete_success">Delete Product Successfully</string>
     <string name="storeDetailName">Store Name</string>
     <string name="storeDesc">Arceo Ranch is a family farm in the Sacramento Delta specializing in unique varieties of cherries, pears, kiwis, apples, stone fruit and cut flowers.</string>
-    <string name="storeOwner">Meet:    Store Owner</string>
+    <string name="storeOwner">meet:    Store Owner</string>
     <string name="storeAddress">Store Address</string>
     <string name="storePhone">Store Phone</string>
     <string name="storeEmail">Store Email</string>
