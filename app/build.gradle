@@ -76,4 +76,6 @@ dependencies {
     // Add the dependency for the Firebase SDK for Google Analytics
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics'
+    // Image view as circle
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
 }
