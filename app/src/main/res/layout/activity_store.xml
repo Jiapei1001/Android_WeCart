@@ -64,7 +64,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/storeDetailName" />
 
-
             <EditText
                 android:id="@+id/storeDesc"
                 android:layout_width="wrap_content"
@@ -188,8 +187,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/storeMakeOrder"
                 app:srcCompat="@drawable/store_go_community" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
 </RelativeLayout>
