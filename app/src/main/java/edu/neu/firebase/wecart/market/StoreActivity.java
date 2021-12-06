@@ -24,6 +24,7 @@ import edu.neu.firebase.wecart.R;
 public class StoreActivity extends AppCompatActivity {
 
     int currStoreId;
+    String marketId;
     StorageReference storageRef;
 
     DatabaseReference stores;
@@ -34,10 +35,11 @@ public class StoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store);
 
         currStoreId = Integer.parseInt(getIntent().getStringExtra("storeId"));
+        marketId = String.valueOf(getIntent().getStringExtra("marketId"));
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        stores = FirebaseDatabase.getInstance().getReference().child("stores");
+        stores = FirebaseDatabase.getInstance().getReference().child(marketId);
 
         Query query = stores.orderByChild("storeId").equalTo(currStoreId);
 

@@ -34,6 +34,7 @@ public class MarketActivity extends AppCompatActivity {
     public void openClickyActivity(String storeId) {
         Intent intent = new Intent(this, StoreActivity.class);
         intent.putExtra("storeId", storeId);
+        intent.putExtra("marketId", "market01");
         startActivity(intent);
     }
 
