@@ -19,22 +19,6 @@ public class Store {
         // default constructor
     }
 
-//    public Store(int storeId, String storeName, String storeBtn, String storeImage, String storeDes, Double latitude, Double longitude, String ownerImage, String ownerName, String address, String email, String phone) {
-//        this.storeId = storeId;
-//        this.storeName = storeName;
-//        this.storeBtn = storeBtn;
-//        this.storeImage = storeImage;
-//        this.storeDes = storeDes;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
-//        this.ownerImage = ownerImage;
-//        this.ownerName = ownerName;
-//        this.address = address;
-//        this.email = email;
-//        this.phone = phone;
-//    }
-
-
     public int getStoreId() {
         return storeId;
     }
