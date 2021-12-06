@@ -176,7 +176,7 @@
                 app:srcCompat="@drawable/store_go_back" />
 
             <ImageView
-                android:id="@+id/storeGoCommunity"
+                android:id="@+id/storeGoToMarket"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
