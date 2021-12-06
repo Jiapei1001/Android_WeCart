@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_seller_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/navigation_seller_orders"
+        android:icon="@drawable/ic_all_orders"
+        android:title="Orders"/>
+
+    <item
+        android:id="@+id/navigation_seller_chat"
+        android:icon="@drawable/ic_chat"
+        android:title="Chat"/>
+
+    <item
+        android:id="@+id/navigation_seller_profile"
+        android:icon="@drawable/ic_person_profile"
+        android:title="Profile"/>
+
+</menu>

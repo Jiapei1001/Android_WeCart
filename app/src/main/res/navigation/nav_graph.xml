@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_seller_home">
+
+    <fragment
+        android:id="@+id/navigation_seller_home"
+        android:name="edu.neu.firebase.wecart.fragments.SellerHomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_seller_home" />
+
+    <fragment
+        android:id="@+id/navigation_seller_orders"
+        android:name="edu.neu.firebase.wecart.fragments.SellerOrdersFragment"
+        android:label="Orders"
+        tools:layout="@layout/fragment_seller_orders" />
+
+    <fragment
+        android:id="@+id/navigation_seller_chat"
+        android:name="edu.neu.firebase.wecart.fragments.SellerChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_seller_chat" />
+
+    <fragment
+        android:id="@+id/navigation_seller_profile"
+        android:name="edu.neu.firebase.wecart.fragments.SellerProfileFragment"
+        android:label="Profiles"
+        tools:layout="@layout/fragment_seller_profile" />
+
+
+</navigation>
