@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeCart">
         <activity
+            android:name=".SellerChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditProductActivity"
             android:exported="true" />
         <activity
