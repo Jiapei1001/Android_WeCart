@@ -26,17 +26,49 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    def nav_version = "2.3.5"
+
+    implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    implementation 'com.google.firebase:firebase-auth:19.1.1'
-    implementation 'com.google.firebase:firebase-database:19.1.1'
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.google.firebase:firebase-database:20.0.2'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
-    testImplementation 'junit:junit:4.+'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:3.3.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    // Navigation bar
+    // Material design
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Wave Animation
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0'
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    // Jetpack Compose Integration
+    implementation "androidx.navigation:navigation-compose:2.4.0-beta02"
+    // excel (for import excel data to firebase)
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // implementation files('libs/poi-3.12-android-a.jar')
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     // Import the Firebase BoM
@@ -44,4 +76,6 @@ dependencies {
     // Add the dependency for the Firebase SDK for Google Analytics
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics'
+    // Image view as circle
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
 }

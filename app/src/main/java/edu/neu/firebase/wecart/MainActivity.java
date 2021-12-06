@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.neu.firebase.wecart.market.Market01Activity;
+import edu.neu.firebase.wecart.market.StoreActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         userAuth = FirebaseAuth.getInstance();
 
         name = findViewById(R.id.editUsername);   //Get the username
@@ -35,6 +38,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         button2.setOnClickListener(view -> loginEvent());
+
+        // temp button for market, will remove
+        Button marketBtn = (Button) findViewById(R.id.marketBtn);
+        marketBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Market01Activity.class);
+            startActivity(intent);
+        });
+
+        // temp button for store, will remove
+        Button storeBtn = (Button) findViewById(R.id.storeBtn);
+        storeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StoreActivity.class);
+            startActivity(intent);
+        });
     }
 
         private void loginEvent() {
