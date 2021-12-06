@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="40dp">
+            android:paddingBottom="60dp">
 
             <ImageView
                 android:id="@+id/storeDetailBtn"
@@ -34,7 +34,8 @@
                 android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/store_01"/>
 
             <TextView
                 android:id="@+id/storeDetailName"
@@ -53,6 +54,7 @@
             <ImageView
                 android:id="@+id/storeImage"
                 android:layout_width="match_parent"
+                android:background="@color/white"
                 android:layout_height="280dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="16dp"

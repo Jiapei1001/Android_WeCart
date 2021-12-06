@@ -43,6 +43,21 @@
                 app:layout_constraintStart_toStartOf="@id/market01"
                 app:layout_constraintTop_toTopOf="@id/market01" />
 
+            <ImageButton
+                android:id="@+id/store2"
+                android:layout_width="220dp"
+                android:layout_height="260dp"
+                android:layout_marginTop="300dp"
+                android:background="@null"
+                android:onClick="onClick"
+                android:rotation="-10"
+                android:scaleType="fitCenter"
+                android:src="@drawable/store_02"
+                app:layout_constraintEnd_toEndOf="@id/market01"
+                app:layout_constraintHorizontal_bias="0.88"
+                app:layout_constraintStart_toStartOf="@id/market01"
+                app:layout_constraintTop_toTopOf="@id/market01" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
