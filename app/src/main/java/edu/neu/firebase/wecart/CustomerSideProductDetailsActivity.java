@@ -71,10 +71,38 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
         productPrice = findViewById(R.id.product_price);
         productImage = findViewById(R.id.img_product);
 
-        curProductId = getIntent().getIntExtra("productId", 0);
-        getDetailProduct();
-
+        if (getIntent() != null) {
+            curProductId = getIntent().getIntExtra("productId", 0);
+            //if (!productId.isEmpty()) {
+                getDetailProduct();
+            //}
+        }
     }
+
+//    private void getDetailProduct(int productId) {
+//        mProducts.child(String.valueOf(productId)).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                p = snapshot.getValue(Product.class);
+//
+//                //Picasso.get().load(p.getProductImageId()).into(productImage);
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                StorageReference mStorageRef = storage.getReference();
+//                // Show Picture that retrieved from Firebase Storage using Glide
+//                StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(p.getProductImageId()));
+//                Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
+//
+//                productPrice.setText(String.valueOf(p.getPrice()));
+//                productName.setText(p.getProductName());
+//                productDescription.setText(p.getProductBrand());
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     private void getDetailProduct() {
 
@@ -97,7 +125,6 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
                     assert p != null;
                     StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(p.getProductImageId()));
                     GlideApp.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
-
 
                     productPrice.setText(String.valueOf(p.getPrice()));
                     productName.setText(p.getProductName());

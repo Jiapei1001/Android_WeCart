@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -64,13 +65,13 @@ public class CartActivity extends AppCompatActivity {
                 buttonEffect(view);
 
                 Request request = new Request(
-                        Common.currentUser.getUsername(),
+
+                        Common.currentUser.getUid(),
                         txtTotalPrice.getText().toString(),
                         cart
                 );
 
-
-                if (tempTotal != 0) {
+                if(tempTotal != 0.0) {
                     //submit to firebase
                     requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
@@ -117,9 +118,9 @@ public class CartActivity extends AppCompatActivity {
 
 
         //Calculate price
-        double total = 0;
-        for (Order order : cart)
-            total += (Double.parseDouble(order.getPrice())) * (Integer.parseInt(order.getQuantity()));
+        double total = 0.0;
+        for(Order order:cart)
+            total+=(Double.parseDouble(order.getPrice()))*(Double.parseDouble(order.getQuantity()));
         tempTotal = total;
         Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);

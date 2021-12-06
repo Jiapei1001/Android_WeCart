@@ -39,17 +39,17 @@ public class OrderStatusActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        loadOrders(Common.currentUser.getUsername());
+        loadOrders(Common.currentUser.getUid());
     }
 
-    private void loadOrders(String name) {
+    private void loadOrders(String id) {
 
         Query query = FirebaseDatabase
                 .getInstance()
                 .getReference()
                 .child("request")
                 .orderByChild("name")
-                .equalTo(name);
+                .equalTo(id);
 
         FirebaseRecyclerOptions<Request> options =
                 new FirebaseRecyclerOptions.Builder<Request>()
@@ -63,7 +63,7 @@ public class OrderStatusActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull OrderViewHolder holder, int position, @NonNull Request model) {
                 holder.txtOrderId.setText(adapter.getRef(position).getKey());
                 holder.txtOrderStatus.setText(convertCodeToStates(model.getStatus()));
-                final Request clickItem = model;
+                //final Request clickItem = model;
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {

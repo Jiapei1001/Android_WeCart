@@ -11,6 +11,15 @@ public class User {
         // Default constructor
     }
 
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public User(String username, int userid) {
         this.username = username;
         this.user_type = user_type;
@@ -24,6 +33,9 @@ public class User {
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+    public String getPassword() {
+        return password;
     }
 
 }
