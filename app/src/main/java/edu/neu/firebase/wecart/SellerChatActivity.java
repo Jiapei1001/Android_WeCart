@@ -13,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SellerChatActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private List<Msg> msgList = new ArrayList<>();
+    private List<Chat_message> chat_message_list = new ArrayList<>();
     private RecyclerView msgRecyclerView;
-    private EditText inputText;
-    private Button send;
+    private EditText chat_seller_content;
+    private Button send_message;
     private LinearLayoutManager layoutManager;
     private MsgAdapter adapter;
 
@@ -27,47 +26,47 @@ public class SellerChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         msgRecyclerView = findViewById(R.id.msg_recycler_view);
-        inputText = findViewById(R.id.input_text);
-        send = findViewById(R.id.send);
+        chat_seller_content = findViewById(R.id.input_text);
+        send_message = findViewById(R.id.send_message);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new MsgAdapter(msgList = getData());
+        adapter = new MsgAdapter(chat_message_list = getData());
 
         msgRecyclerView.setLayoutManager(layoutManager);
         msgRecyclerView.setAdapter(adapter);
 
-        send.setOnClickListener(new View.OnClickListener() {
+        send_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = inputText.getText().toString();
+                String content = chat_seller_content.getText().toString();
                 if(!content.equals("")) {
-                    msgList.add(new Msg(content,Msg.TYPE_SEND));
-                    adapter.notifyItemInserted(msgList.size()-1);
-                    msgRecyclerView.scrollToPosition(msgList.size()-1);
-                    inputText.setText("");//Clear the input content
+                    chat_message_list.add(new Chat_message(content, Chat_message.TYPE_send_message));
+                    adapter.notifyItemInserted(chat_message_list.size()-1);
+                    msgRecyclerView.scrollToPosition(chat_message_list.size()-1);
+                    chat_seller_content.setText("");//Clear the input content
                 }
 //sample chat
-                if(msgList.size() == 2){
-                    msgList.add(new Msg("I donno how to cancel order",Msg.TYPE_RECEIVED));
-                    adapter.notifyItemInserted(msgList.size()-1);
-                    msgRecyclerView.scrollToPosition(msgList.size()-1);
+                if(chat_message_list.size() == 2){
+                    chat_message_list.add(new Chat_message("I donno how to cancel order", Chat_message.TYPE_RECEIVED));
+                    adapter.notifyItemInserted(chat_message_list.size()-1);
+                    msgRecyclerView.scrollToPosition(chat_message_list.size()-1);
                 }
-                if(msgList.size() == 4){
-                    msgList.add(new Msg("Can you help me to cancel it?",Msg.TYPE_RECEIVED));
-                    adapter.notifyItemInserted(msgList.size()-1);
-                    msgRecyclerView.scrollToPosition(msgList.size()-1);
+                if(chat_message_list.size() == 4){
+                    chat_message_list.add(new Chat_message("Can you help me to cancel it?", Chat_message.TYPE_RECEIVED));
+                    adapter.notifyItemInserted(chat_message_list.size()-1);
+                    msgRecyclerView.scrollToPosition(chat_message_list.size()-1);
                 }
-                if(msgList.size() == 6){
-                    msgList.add(new Msg("I am ok now, thank you!",Msg.TYPE_RECEIVED));
-                    adapter.notifyItemInserted(msgList.size()-1);
-                    msgRecyclerView.scrollToPosition(msgList.size()-1);
+                if(chat_message_list.size() == 6){
+                    chat_message_list.add(new Chat_message("I am ok now, thank you!", Chat_message.TYPE_RECEIVED));
+                    adapter.notifyItemInserted(chat_message_list.size()-1);
+                    msgRecyclerView.scrollToPosition(chat_message_list.size()-1);
                 }
             }
         });
     }
 
-    private List<Msg> getData(){
-        List<Msg> list = new ArrayList<>();
-        list.add(new Msg("Hi, I need help.",Msg.TYPE_RECEIVED));
+    private List<Chat_message> getData(){
+        List<Chat_message> list = new ArrayList<>();
+        list.add(new Chat_message("Hi, I need help.", Chat_message.TYPE_RECEIVED));
         return list;
     }
 }

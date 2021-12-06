@@ -29,10 +29,10 @@
             android:gravity="left"/>
 
         <Button
-            android:id="@+id/send"
+            android:id="@+id/send_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="Send message"
             android:backgroundTint="#FDA65D"
             android:textAllCaps="false"
             android:textSize="20sp"/>

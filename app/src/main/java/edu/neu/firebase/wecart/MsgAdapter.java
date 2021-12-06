@@ -13,8 +13,8 @@ import java.util.List;
 
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
 
-    private List<Msg> list;
-    public MsgAdapter(List<Msg> list){
+    private List<Chat_message> list;
+    public MsgAdapter(List<Chat_message> list){
         this.list = list;
     }
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -42,17 +42,17 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Msg msg = list.get(position);
-        if(msg.getType() == Msg.TYPE_RECEIVED){
+        Chat_message chatmessage = list.get(position);
+        if(chatmessage.getType() == Chat_message.TYPE_RECEIVED){
             //Show the receive message
             holder.leftLayout.setVisibility(View.VISIBLE);
-            holder.left_msg.setText(msg.getContent());
+            holder.left_msg.setText(chatmessage.getContent());
 
             holder.rightLayout.setVisibility(View.GONE);
-        }else if(msg.getType() == Msg.TYPE_SEND){
-            //Show the send message
+        }else if(chatmessage.getType() == Chat_message.TYPE_send_message){
+            //Show the send_message message
             holder.rightLayout.setVisibility(View.VISIBLE);
-            holder.right_msg.setText(msg.getContent());
+            holder.right_msg.setText(chatmessage.getContent());
 
             holder.leftLayout.setVisibility(View.GONE);
         }

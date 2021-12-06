@@ -1,15 +1,13 @@
 package edu.neu.firebase.wecart;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,21 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
         name = findViewById(R.id.editUsername);   //Get the username
         passwd = findViewById(R.id.editPassword);     //get the Password
-        Button button1 = (Button) findViewById(R.id.button_register);
-        Button button2 = (Button) findViewById(R.id.button_login);
+        Button button1 = findViewById(R.id.button_register);
+        Button button2 = findViewById(R.id.button_login);
         button1.setOnClickListener(v -> {
             Intent intent1 = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent1);
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                loginEvent();
-
-            }
-        });
+        button2.setOnClickListener(view -> loginEvent());
     }
 
         private void loginEvent() {
@@ -53,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(MainActivity.this,ChatActivity.class));
+                                startActivity(new Intent(MainActivity.this,SellerChatActivity.class));
 
                             } else {
                                 Toast.makeText(MainActivity.this,"Password doesn't match!",Toast.LENGTH_SHORT).show();
