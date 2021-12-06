@@ -26,7 +26,7 @@
             android:name=".market.StoreActivity"
             android:exported="true" />
         <activity
-            android:name=".market.MarketActivity"
+            android:name=".market.Market01Activity"
             android:exported="true" />
         <activity
             android:name=".Jump"

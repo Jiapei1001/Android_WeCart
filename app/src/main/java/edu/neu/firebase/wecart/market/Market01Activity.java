@@ -14,7 +14,7 @@ import android.widget.ScrollView;
 
 import edu.neu.firebase.wecart.R;
 
-public class MarketActivity extends AppCompatActivity {
+public class Market01Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

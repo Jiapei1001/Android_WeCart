@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.Toast;
 
 
-import edu.neu.firebase.wecart.market.MarketActivity;
+import edu.neu.firebase.wecart.market.Market01Activity;
 import edu.neu.firebase.wecart.market.StoreActivity;
 
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         // temp button for market, will remove
         Button marketBtn = (Button) findViewById(R.id.marketBtn);
         marketBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MarketActivity.class);
+            Intent intent = new Intent(MainActivity.this, Market01Activity.class);
             startActivity(intent);
         });
 
