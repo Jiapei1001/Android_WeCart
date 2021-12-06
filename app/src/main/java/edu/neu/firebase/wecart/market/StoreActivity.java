@@ -1,6 +1,9 @@
 package edu.neu.firebase.wecart.market;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +39,21 @@ public class StoreActivity extends AppCompatActivity {
 
         currStoreId = Integer.parseInt(getIntent().getStringExtra("storeId"));
         marketId = String.valueOf(getIntent().getStringExtra("marketId"));
+
+        // button to go back to market
+        ImageView goToMarketBtn = findViewById(R.id.storeGoToMarket);
+        goToMarketBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (marketId) {
+                    case "market01":
+                        Intent intent = new Intent(getApplicationContext(), Market01Activity.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
+
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
