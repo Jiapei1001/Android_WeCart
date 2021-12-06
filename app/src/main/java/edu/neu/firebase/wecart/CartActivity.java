@@ -37,7 +37,7 @@ public class CartActivity extends AppCompatActivity {
 
     CartAdapter adapter;
 
-    int tempTotal;
+    double tempTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +70,16 @@ public class CartActivity extends AppCompatActivity {
                 );
 
 
-                if(tempTotal != 0) {
+                if (tempTotal != 0) {
                     //submit to firebase
                     requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
                     //Delete Cart
                     new Database(getBaseContext()).cleanCart();
-                    Toast.makeText(CartActivity.this,"Successfully Ordered!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Successfully Ordered!", Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else {
-                    Toast.makeText(CartActivity.this,"Cart is empty",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CartActivity.this, "Cart is empty", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -113,16 +112,16 @@ public class CartActivity extends AppCompatActivity {
 
     private void loadListProduct() {
         cart = new Database(this).getCarts();
-        adapter = new CartAdapter(cart,this);
+        adapter = new CartAdapter(cart, this);
         recyclerView.setAdapter(adapter);
 
 
         //Calculate price
-        int total = 0;
-        for(Order order:cart)
-            total+=(Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuantity()));
+        double total = 0;
+        for (Order order : cart)
+            total += (Double.parseDouble(order.getPrice())) * (Integer.parseInt(order.getQuantity()));
         tempTotal = total;
-        Locale locale = new Locale("en","US");
+        Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         txtTotalPrice.setText(fmt.format(total));

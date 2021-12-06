@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -15,8 +16,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import edu.neu.firebase.wecart.Database.Database;
 
@@ -29,7 +36,7 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
     FloatingActionButton cartBtn;
     ElegantNumberButton quantityBtn;
 
-    String productId;
+    int curProductId;
 
     private DatabaseReference mDatabase;
     private DatabaseReference mProducts;
@@ -53,7 +60,7 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new Database(getBaseContext()).addToCart(new Order(
-                        String.valueOf(productId), p.getProductName(), quantityBtn.getNumber(), String.valueOf(p.getPrice())
+                        String.valueOf(curProductId), p.getProductName(), quantityBtn.getNumber(), String.valueOf(p.getPrice())
                 ));
                 Snackbar.make(view, "Add to Cart", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
@@ -62,33 +69,48 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
         productDescription = findViewById(R.id.product_description);
         productName = findViewById(R.id.product_name);
         productPrice = findViewById(R.id.product_price);
-        productImage = findViewById(R.id.product_image);
+        productImage = findViewById(R.id.img_product);
 
-        if (getIntent() != null) {
-            productId = getIntent().getStringExtra("ProductId");
-            if (!productId.isEmpty()) {
-                getDetailProduct(productId);
-            }
-        }
+        curProductId = getIntent().getIntExtra("productId", 0);
+        getDetailProduct();
+
     }
 
-    private void getDetailProduct(String productId) {
-        mProducts.child(productId).addValueEventListener(new ValueEventListener() {
+    private void getDetailProduct() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference mStorageRef = storage.getReference();
+
+        // Check if the product exists in firebase database by the product id
+        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                p = snapshot.getValue(Product.class);
+                // Even when there is only a single match for the query, the snapshot is still a
+                // list; it just contains a single item. To access the item, you need to loop over
+                // the result
+                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
 
-                Picasso.get().load(p.getProductImageId()).into(productImage);
+                    p = productSnapshot.getValue(Product.class);
 
-                productPrice.setText(String.valueOf(p.getPrice()));
-                productName.setText(p.getProductName());
-                productDescription.setText(p.getProductBrand());
+                    // Show Picture that retrieved from Firebase Storage using Glide
+                    assert p != null;
+                    StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(p.getProductImageId()));
+                    GlideApp.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
+
+
+                    productPrice.setText(String.valueOf(p.getPrice()));
+                    productName.setText(p.getProductName());
+                    productDescription.setText(p.getProductBrand());
+
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // do nothing
             }
+
         });
     }
 }

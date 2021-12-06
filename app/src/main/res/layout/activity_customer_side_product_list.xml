@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerSideProductListActivity"
     android:background="@color/white"
-    >
+    tools:context=".CustomerSideProductListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+        android:scrollbars="vertical" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -26,6 +25,6 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/teal_200"
-        app:srcCompat="@drawable/ic_cart_icon"/>
+        app:srcCompat="@drawable/ic_cart_icon" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

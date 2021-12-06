@@ -16,14 +16,14 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        tools:replace="android:theme"
         android:theme="@style/Theme.WeCart">
         <activity
-            android:name=".EditProductActivity"
+            android:name=".EditingProductActivity"
             android:exported="true" />
         <activity
             android:name=".SellerBottomNavigationActivity"
-            android:theme="@style/Theme.WeCart"
-            tools:replace="android:theme" />
+            android:exported="true" />
         <activity
             android:name=".OrderStatusActivity"
             android:exported="true" />
@@ -47,6 +47,9 @@
             android:exported="true" />
         <activity
             android:name=".CustomerSideProductListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CustomerSideProductDetailsActivity"
             android:exported="true" />
         <activity
             android:name=".AddingProductActivity"

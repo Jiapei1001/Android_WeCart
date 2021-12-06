@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,41 +25,43 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class CustomerSideProductListActivity extends AppCompatActivity {
 
+    FirebaseRecyclerAdapter<Product, ProductViewHolder> adapter;
+    String StoreId = "Super QQ Fruit Store";
     private RecyclerView recyclerView;
-
     private DatabaseReference mDatabase;
     private DatabaseReference mProducts;
-
-    FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
-
-    String StoreId = "Super QQ Fruit Store";
+    private final ArrayList<Product> productList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_side_product_list);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("products");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mProducts = mDatabase.child("products");
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_product);
+        recyclerView = findViewById(R.id.recycler_product);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        if(getIntent() != null){
+        // Todo: change store id - parse from login seller
+        if (getIntent() != null) {
             //int curProductId = Integer.parseInt(productIdTxt.getText().toString());
 //            String curProductId = getIntent().getStringExtra("StoreId");
 //            System.out.println("----------");
 //            System.out.println(curProductId);
 //            System.out.println("----------");
-            if(!StoreId.isEmpty()){
+            if (!StoreId.isEmpty()) {
                 loadProduct(StoreId);
             }
         }
@@ -67,7 +70,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cartIntent = new Intent(CustomerSideProductListActivity.this,CartActivity.class);
+                Intent cartIntent = new Intent(CustomerSideProductListActivity.this, CartActivity.class);
                 startActivity(cartIntent);
             }
 
@@ -86,7 +89,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
                         .setQuery(query, Product.class)
                         .build();
 
-        adapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options){
+        adapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options) {
 
             @Override
             public ProductViewHolder onCreateViewHolder(ViewGroup parent, int i) {
@@ -98,19 +101,27 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(ProductViewHolder holder, int position, Product p) {
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference mStorageRef = storage.getReference();
+
                 holder.productIdTxt.setText(String.valueOf(p.getProductId()));
                 holder.txtProductName.setText(p.getProductName());
                 holder.txtProductDescription.setText(p.getProductBrand());
                 holder.txtProductPrice.setText(String.valueOf(p.getPrice()));
-                Picasso.get().load(p.getProductImageId())
-                        .into(holder.imgProduct);
+
+                // Show Picture that retrieved from Firebase Storage using Glide
+                StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(p.getProductImageId()));
+                Glide.with(getApplicationContext()).load(imagesStorageRef).into(holder.imgProduct);
 
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent CustomerSideProductDetailsActivity = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
-                        CustomerSideProductDetailsActivity.putExtra("ProductId",adapter.getRef(position).getKey());
-                        startActivity(CustomerSideProductDetailsActivity);
+                        Intent intentCustomerSideProductDetailsActivity = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
+
+                        System.out.println(p.getProductId());
+                        intentCustomerSideProductDetailsActivity.putExtra("productId", p.getProductId());
+                        startActivity(intentCustomerSideProductDetailsActivity);
                     }
                 });
             }
@@ -124,6 +135,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity {
         super.onStart();
         adapter.startListening();
     }
+
     @Override
     public void onStop() {
         super.onStop();
