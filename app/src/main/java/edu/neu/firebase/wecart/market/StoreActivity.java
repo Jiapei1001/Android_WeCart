@@ -19,7 +19,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
+import edu.neu.firebase.wecart.GlideApp;
 import edu.neu.firebase.wecart.R;
 
 public class StoreActivity extends AppCompatActivity {
@@ -41,7 +43,6 @@ public class StoreActivity extends AppCompatActivity {
         stores = FirebaseDatabase.getInstance().getReference().child("stores");
 
         Query query = stores.orderByChild("storeId").equalTo(currStoreId);
-//        DatabaseReference fireDB = FirebaseDatabase.getInstance().getReference();
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -53,14 +54,14 @@ public class StoreActivity extends AppCompatActivity {
                     // store btn
                     ImageView storeBtn = findViewById(R.id.storeDetailBtn);
                     StorageReference storeBtnOnline = storageRef.child(String.valueOf(currStore.getStoreBtn()));
-                    Glide.with(getApplicationContext()).load(storeBtnOnline).into(storeBtn);
+                    GlideApp.with(getApplicationContext()).load(storeBtnOnline).into(storeBtn);
 
                     // name
                     TextView storeName = findViewById(R.id.storeDetailName);
                     storeName.setText(currStore.getStoreName());
 
                     // store image
-                    ImageView storeImageView = findViewById(R.id.storeDetailBtn);
+                    ImageView storeImageView = findViewById(R.id.storeImage);
                     StorageReference storeImageOnline = storageRef.child(String.valueOf(currStore.getStoreImage()));
                     Glide.with(getApplicationContext()).load(storeImageOnline).into(storeImageView);
 
@@ -69,7 +70,7 @@ public class StoreActivity extends AppCompatActivity {
                     storeDesc.setText(currStore.getStoreDes());
 
                     // owner image
-                    ImageView ownerImageView = findViewById(R.id.storeOwnerImage);
+                    CircularImageView ownerImageView = findViewById(R.id.storeOwnerImage);
                     StorageReference ownerImageOnline = storageRef.child(String.valueOf(currStore.getOwnerImage()));
                     Glide.with(getApplicationContext()).load(ownerImageOnline).into(ownerImageView);
 
