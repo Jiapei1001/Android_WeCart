@@ -21,6 +21,12 @@
         android:theme="@style/Theme.WeCart"
         tools:replace="android:theme">
         <activity
+            android:name=".SellerChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditingProductActivity"
             android:exported="true" />
         <activity
@@ -36,7 +42,7 @@
             android:name=".market.StoreActivity"
             android:exported="true" />
         <activity
-            android:name=".market.MarketActivity"
+            android:name=".market.Market01Activity"
             android:exported="true" />
         <activity
             android:name=".Jump"

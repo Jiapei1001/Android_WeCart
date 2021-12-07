@@ -1,23 +1,25 @@
 package edu.neu.firebase.wecart;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+
 import android.view.MotionEvent;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.Toast;
-
 
 import edu.neu.firebase.wecart.fragments.SellerHomeFragment;
 import edu.neu.firebase.wecart.market.MarketActivity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import edu.neu.firebase.wecart.market.Market01Activity;
+import edu.neu.firebase.wecart.market.StoreActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,19 +58,26 @@ public class MainActivity extends AppCompatActivity {
 
         name = findViewById(R.id.editUsername);   //Get the username
         passwd = findViewById(R.id.editPassword);     //get the Password
-
-        UID = findViewById(R.id.UID);
+        
+        // Todo: delete UID 
+        UID = findViewById(R.id.UID); 
 
         Button button1 = (Button) findViewById(R.id.button_register);
         Button button2 = (Button) findViewById(R.id.button_login);
+
         button1.setOnClickListener(v -> {
             Intent intent1 = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent1);
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        button2.setOnClickListener(view -> loginEvent());
+
+        // temp button for market, will remove
+        Button marketBtn = (Button) findViewById(R.id.marketBtn);
+        marketBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Market01Activity.class);
+            startActivity(intent);
+        });
 
                 //loginEvent();
                 buttonEffect(view);
@@ -120,6 +129,12 @@ public class MainActivity extends AppCompatActivity {
            }
         });
 
+        // temp button for store, will remove
+        Button storeBtn = (Button) findViewById(R.id.storeBtn);
+        storeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StoreActivity.class);
+            startActivity(intent);
+        });
     }
 
         private void loginEvent() {
@@ -131,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(MainActivity.this,Jump.class));
                                 Common.currentUser = new User(name.getText().toString(), 1);
+                                // Todo: SellerChatActivity
+                                startActivity(new Intent(MainActivity.this,SellerChatActivity.class));
                             } else {
                                 Toast.makeText(MainActivity.this,"Password doesn't match!",Toast.LENGTH_SHORT).show();
                             }
