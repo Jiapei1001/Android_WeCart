@@ -60,7 +60,6 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
             sellerInstruction.setText(R.string.oldSellerInstruction);
         }
 
-
         myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.milkshake);
 
         // Implement OnClickListener() for buttons

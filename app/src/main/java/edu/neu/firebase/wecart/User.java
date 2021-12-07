@@ -9,7 +9,7 @@ public class User {
     public String password;
     public String uid;
     public int storeId;
-    public TreeMap<Integer, String> storeInfo;
+    public String storeName;
 
     public User() {
         // Default constructor
@@ -71,11 +71,11 @@ public class User {
         this.storeId = storeId;
     }
 
-    public TreeMap<Integer, String> getStoreInfo() {
-        return storeInfo;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setStoreInfo(TreeMap<Integer, String> storeInfo) {
-        this.storeInfo = storeInfo;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

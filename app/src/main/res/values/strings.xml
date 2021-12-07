@@ -26,6 +26,12 @@
     <string name="per">per</string>
     <string name="check_stock_status">Check Stock Status</string>
     <string name="delete_success">Delete Product Successfully</string>
+    <string name="storeDetailName">Store Name</string>
+    <string name="storeDesc">Arceo Ranch is a family farm in the Sacramento Delta specializing in unique varieties of cherries, pears, kiwis, apples, stone fruit and cut flowers.</string>
+    <string name="storeOwner">meet:    Store Owner</string>
+    <string name="storeAddress">Store Address</string>
+    <string name="storePhone">Store Phone</string>
+    <string name="storeEmail">Store Email</string>
     <string-array name="unit_array">
         <item>lb</item>
         <item>pc</item>
@@ -39,5 +45,5 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="new_seller_instruction">Since you are the new seller, please create a new store</string>
-    <string name="oldSellerInstruction">\"Add more product and check your orders ... \"</string>
+    <string name="oldSellerInstruction">Add more product and check your orders … </string>
 </resources>
