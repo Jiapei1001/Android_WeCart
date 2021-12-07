@@ -6,11 +6,22 @@ public class Product {
     private String productName;
     private String productBrand;
     private String productStore;
+    private int storeId;
     private double price;
     private int quantity;
     private String productImageId;
     private Boolean inStock;
     private String productUnit;
+
+    private int totalInCart;
+
+    public int getTotalInCart() {
+        return totalInCart;
+    }
+
+    public void setTotalInCart(int totalInCart) {
+        this.totalInCart = totalInCart;
+    }
 
     public Product() {
         // Default constructor
@@ -46,6 +57,14 @@ public class Product {
 
     public void setProductStore(String productStore) {
         this.productStore = productStore;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public double getPrice() {

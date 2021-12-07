@@ -1,5 +1,11 @@
 package edu.neu.firebase.wecart;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,12 +19,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,10 +36,10 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Upload image to firebase storage (ref: https://www.youtube.com/watch?v=7p4MBsz__ao)
- */
-public class AddingProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditingProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private int curProductId;
+
     private Button selectProductButton, submitButton, checkProductIdButton;
     private ImageView productImage;
 
@@ -50,14 +50,9 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
     private EditText quantityTxt;
     private TextView productStoreTxt;
     private TextView inStockTxt;
-    private TextView newProductIdTxt;
 
-    private Spinner UnitChoiceSpinner;
     private String productUnit;
 
-    private int storeId;
-    private String productStore;
-    private Product product;
     private Product existedProduct;
 
     private FirebaseStorage storage;
@@ -70,14 +65,18 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
 
     private StorageReference mStorageRef;
 
+    private Product product;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adding_product);
+        setContentView(R.layout.activity_editing_product);
 
-        // TODO: productStore should be passed from the previous screen
-        productStore = "Super QQ Fruit Store";
-        storeId = 2;
+        // Todo: change store
+        String productStore = "Super QQ Fruit Store";
+
+        // Retrieve curProductId from previous activity ImportingProductActivity
+        curProductId = getIntent().getIntExtra("curProductId", 0);
 
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
@@ -88,28 +87,6 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         selectProductButton = findViewById(R.id.btnSelectProduct);
         submitButton = findViewById(R.id.btnSubmit);
         productImage = findViewById(R.id.imgViewProduct);
-
-        // Get the current largest product Id, so that means if the input is a new product,
-        // the new product id will be the next one.
-        Query query = mProducts.orderByChild("productId").limitToLast(1);
-        query.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren()) {
-                    StringBuilder newProductHint = new StringBuilder();
-                    newProductHint.append("The new product Id should start from ")
-                            .append(myDataSnapshot.getValue(Product.class).getProductId() + 1);
-                    productIdTxt.setHint(newProductHint);
-                }
-            }
-
-            public void onCancelled(DatabaseError firebaseError) {
-
-            }
-
-        });
 
         productIdTxt = findViewById(R.id.editTextProductId);
         productNameTxt = findViewById(R.id.editTextProductName);
@@ -124,8 +101,8 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         // Using spinners to do the product unit Choice
         // Take the instance of Spinner and apply OnItemSelectedListener on it which tells which item
         // of spinner is clicked.
-        UnitChoiceSpinner = (Spinner) findViewById(R.id.spinnerUnitChoice);
-        UnitChoiceSpinner.setOnItemSelectedListener(this);
+        Spinner unitChoiceSpinner = (Spinner) findViewById(R.id.spinnerUnitChoice);
+        unitChoiceSpinner.setOnItemSelectedListener(this);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,
@@ -134,30 +111,14 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         // Specify the layout to use when the list of choices appears
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        UnitChoiceSpinner.setAdapter(arrayAdapter);
+        unitChoiceSpinner.setAdapter(arrayAdapter);
 
         // create a new product
         product = new Product();
 
         product.setProductStore(productStore);
-        product.setStoreId(storeId);
 
-        // check if product id exists
-        checkProductIdButton = findViewById(R.id.btnCheckId);
-        checkProductIdButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // check if productIdTxt EditText is empty or not
-                if (!productIdTxt.getText().toString().matches("")) {
-                    getProductData();
-                } else {
-                    // If there is no input
-                    Toast.makeText(AddingProductActivity.this, "Please input the product " +
-                            "id to check the stock status.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        getProductData();
 
         // select an image from gallery in Android Studio (notice that startActivityForResult deprecated)
         selectProductButton.setOnClickListener(new View.OnClickListener() {
@@ -178,55 +139,33 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-        productUnit = parent.getItemAtPosition(pos).toString();
-        product.setProductUnit(productUnit);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
-
     private void getProductData() {
-        // Set product id
-        int curProductId = Integer.parseInt(productIdTxt.getText().toString());
+
         // Check if the product exists in firebase database by the product id
         Query query = mProducts.orderByChild("productId").equalTo(curProductId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // check if the firebase query is not empty
-                if (snapshot.exists()) {
-                    // Even when there is only a single match for the query, the snapshot is still a
-                    // list; it just contains a single item. To access the item, you need to loop over
-                    // the result
-                    for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                // Even when there is only a single match for the query, the snapshot is still a
+                // list; it just contains a single item. To access the item, you need to loop over
+                // the result
+                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
 
-                        existedProduct = productSnapshot.getValue(Product.class);
+                    existedProduct = productSnapshot.getValue(Product.class);
 
-                        // When the product exists, just display the info in EditText
-                        productIdTxt.setText(String.valueOf(Objects.requireNonNull(existedProduct).getProductId()));
-                        productNameTxt.setText(existedProduct.getProductName());
-                        productBrandTxt.setText(existedProduct.getProductBrand());
-                        priceTxt.setText(String.valueOf(existedProduct.getPrice()));
-                        quantityTxt.setText(String.valueOf(existedProduct.getQuantity()));
+                    // When the product exists, just display the info in EditText
+                    productIdTxt.setText(String.valueOf(Objects.requireNonNull(existedProduct).getProductId()));
+                    productNameTxt.setText(existedProduct.getProductName());
+                    productBrandTxt.setText(existedProduct.getProductBrand());
+                    priceTxt.setText(String.valueOf(existedProduct.getPrice()));
+                    quantityTxt.setText(String.valueOf(existedProduct.getQuantity()));
 
-                        // Todo: Assign the specific unit to spinners
+                    // Todo: Assign the specific unit to spinners
 
-                        // Show Picture that retrieved from Firebase Storage using Glide
-                        StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(existedProduct.getProductImageId()));
-                        Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
+                    // Show Picture that retrieved from Firebase Storage using Glide
+                    StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(existedProduct.getProductImageId()));
+                    Glide.with(getApplicationContext()).load(imagesStorageRef).into(productImage);
 
-                        inStockTxt.setText(R.string.in_stock_message);
-                    }
-                } else {
-                    existedProduct = null;
-                    inStockTxt.setText(R.string.not_in_stock_message);
                 }
             }
 
@@ -239,9 +178,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
     }
 
     private void updateProductData() {
-        // Set product id
-        int curProductId = Integer.parseInt(productIdTxt.getText().toString());
-        // Check if the product exists in firebase database by the product id
+
         Query query = mProducts.orderByChild("productId").equalTo(curProductId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -250,37 +187,46 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
                 // list; it just contains a single item. To access the item, you need to loop over
                 // the result
                 for (DataSnapshot productSnapshot : snapshot.getChildren()) {
-                    if (productSnapshot.exists()) {
-                        existedProduct = productSnapshot.getValue(Product.class);
-                        String key = productSnapshot.getKey();
-                        assert key != null;
-                        // Update the product info
-                        if (!existedProduct.getProductName().equals(product.getProductName())) {
-                            mProducts.child(key).child("productName").setValue(product.getProductName());
-                        } else if (!existedProduct.getProductBrand().equals(product.getProductBrand())) {
-                            mProducts.child(key).child("productBrand").setValue(product.getProductBrand());
-                        } else if (existedProduct.getQuantity() != product.getQuantity()) {
-                            mProducts.child(key).child("quantity").setValue(product.getQuantity());
-                        } else if (existedProduct.getPrice() != product.getPrice()) {
-                            mProducts.child(key).child("price").setValue(product.getPrice());
-                        } else if (!existedProduct.getProductUnit().equals(product.getProductUnit())) {
-                            mProducts.child(key).child("productUnit").setValue(product.getProductUnit());
-                        } else if (!existedProduct.getProductImageId().equals(product.getProductImageId())) {
-                            mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
-                        }
-                        Toast.makeText(AddingProductActivity.this, "Product Information was Updated Successfully.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        inStockTxt.setText(R.string.not_in_stock_message);
+                    existedProduct = productSnapshot.getValue(Product.class);
+                    String key = productSnapshot.getKey();
+                    assert key != null;
+                    // Update the product info
+                    if (!existedProduct.getProductName().equals(product.getProductName())) {
+                        mProducts.child(key).child("productName").setValue(product.getProductName());
+                    } else if (!existedProduct.getProductBrand().equals(product.getProductBrand())) {
+                        mProducts.child(key).child("productBrand").setValue(product.getProductBrand());
+                    } else if (existedProduct.getQuantity() != product.getQuantity()) {
+                        mProducts.child(key).child("quantity").setValue(product.getQuantity());
+                    } else if (existedProduct.getPrice() != product.getPrice()) {
+                        mProducts.child(key).child("price").setValue(product.getPrice());
+                    } else if (!existedProduct.getProductUnit().equals(product.getProductUnit())) {
+                        mProducts.child(key).child("productUnit").setValue(product.getProductUnit());
+                        // TODO: update product image (check if the image is the same one)
+                    } else if (!existedProduct.getProductImageId().equals(product.getProductImageId())) {
+                        mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
                     }
+                    Toast.makeText(EditingProductActivity.this, "Product Information was Updated Successfully.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // do nothing
-            }
 
+            }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+        productUnit = parent.getItemAtPosition(position).toString();
+        product.setProductUnit(productUnit);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
     private void productInfoUploader() {
@@ -300,10 +246,10 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     if (task.isSuccessful()) {
                         // Upload image successfully
-                        Toast.makeText(AddingProductActivity.this, "Product Image was Uploaded Successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditingProductActivity.this, "Product Image was Uploaded Successfully.", Toast.LENGTH_SHORT).show();
                     } else {
                         // Fail to upload
-                        Toast.makeText(AddingProductActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditingProductActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -331,12 +277,8 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             product.setProductUnit(productUnit);
         }
 
-        // If the product exists, just update the product data
-        if (existedProduct != null) {
-            updateProductData();
-        } else {
-            mProducts.push().setValue(product);
-        }
+        // Just update the product data
+        updateProductData();
     }
 
     // Start an activity for result (new method)

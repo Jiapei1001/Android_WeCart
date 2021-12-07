@@ -40,6 +40,7 @@
             android:layout_marginBottom="300dp"
             android:fontFamily="@font/merriweather_blackitalic"
             android:text="Home"
+            android:gravity="center"
             android:textColor="#E26A2C"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,6 +49,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.143" />
+
+        <TextView
+            android:id="@+id/currentUserGreetingTextView"
+            android:layout_width="281dp"
+            android:layout_height="45dp"
+            android:fontFamily="@font/merriweather_blackitalic"
+            android:text="Hello"
+            android:gravity="center"
+            android:textColor="#344CB7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.207" />
+
+        <TextView
+            android:id="@+id/sellerInstructionTextView"
+            android:layout_width="317dp"
+            android:layout_height="56dp"
+            android:fontFamily="@font/merriweather_blackitalic"
+            android:text="Instructions"
+            android:gravity="center"
+            android:textColor="#116530"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.862" />
 
         <Button
             android:id="@+id/btnRevenue"
