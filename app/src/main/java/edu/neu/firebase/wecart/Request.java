@@ -8,16 +8,20 @@ public class Request {
     private String name;
     private String total;
     private String status;
+    private String storeName;
+    private int storeId;
     private List<Order> products;
 
     public Request() {
     }
 
-    public Request(String name, String total, List<Order> products) {
+    public Request(String name, String total, List<Order> products, String storeName, int storeId) {
         this.name = name;
         this.total = total;
         this.products = products;
         this.status = "ordered";
+        this.storeName = storeName;
+        this.storeId = storeId;
     }
 
     public String getName() {
@@ -50,5 +54,25 @@ public class Request {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public void setProducts(List<Order> products) {
+        this.products = products;
     }
 }

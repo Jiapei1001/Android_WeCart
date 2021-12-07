@@ -38,18 +38,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class CustomerSideProductListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    FirebaseRecyclerAdapter<Product, ProductViewHolder> adapter;
-    String StoreId = "Super QQ Fruit Store";
     private RecyclerView recyclerView;
+
     private DatabaseReference mDatabase;
     private DatabaseReference mProducts;
-    private final ArrayList<Product> productList = new ArrayList<>();
+
+    FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
+
+    String StoreId = "Super QQ Fruit Store";
 
     TextView txtFullName;
 
@@ -58,13 +59,10 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_side_product_list);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mProducts = mDatabase.child("products");
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // if (toolbar != null) {
-            toolbar.setTitle("Grocery");
-            setSupportActionBar(toolbar);
+        // if (toolbar != null) {
+        toolbar.setTitle("Grocery");
+        setSupportActionBar(toolbar);
         //}
 
 
@@ -85,50 +83,40 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-       // if (drawer != null) {
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
+        // if (drawer != null) {
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
         //}
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
-            View headerView = navigationView.getHeaderView(0);
-            txtFullName = headerView.findViewById(R.id.txtFullName);
-            txtFullName.setText(Common.currentUser.getUsername());
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        txtFullName = headerView.findViewById(R.id.txtFullName);
+        txtFullName.setText(Common.currentUser.getUsername());
         //}
 
 
         //Set name for user
 
 
+
         recyclerView = findViewById(R.id.recycler_product);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Todo: change store id - parse from login seller
-        if (getIntent() != null) {
+
+        if(getIntent() != null){
             //int curProductId = Integer.parseInt(productIdTxt.getText().toString());
 //            String curProductId = getIntent().getStringExtra("StoreId");
 //            System.out.println("----------");
 //            System.out.println(curProductId);
 //            System.out.println("----------");
-            if (!StoreId.isEmpty()) {
+            if(!StoreId.isEmpty()){
                 loadProduct(StoreId);
             }
         }
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cartIntent = new Intent(CustomerSideProductListActivity.this, CartActivity.class);
-                startActivity(cartIntent);
-            }
-
-        });
-
 
     }
 
@@ -143,7 +131,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
                         .setQuery(query, Product.class)
                         .build();
 
-        adapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options){
 
             @NonNull
             @Override
@@ -163,7 +151,6 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
                 holder.txtProductName.setText(p.getProductName());
                 holder.txtProductDescription.setText(p.getProductBrand());
                 holder.txtProductPrice.setText(String.valueOf(p.getPrice()));
-
                 System.out.println("-------");
                 System.out.println(p.getProductImageId());
                 System.out.println("-------");
@@ -176,7 +163,6 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-
                         Intent CustomerSideProductDetailsActivity = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
                         CustomerSideProductDetailsActivity.putExtra("productId", p.getProductId());
                         startActivity(CustomerSideProductDetailsActivity);
@@ -224,7 +210,6 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         super.onStart();
         adapter.startListening();
     }
-
     @Override
     public void onStop() {
         super.onStop();

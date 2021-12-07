@@ -45,6 +45,10 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        // Todo: storeName, storeId
+        String storeName = "Super QQ Fruit Store";
+        int storeId = 2;
+
         //Firebase
         database = FirebaseDatabase.getInstance();
         requests = database.getReference("request");
@@ -68,7 +72,7 @@ public class CartActivity extends AppCompatActivity {
 
                         Common.currentUser.getUid(),
                         txtTotalPrice.getText().toString(),
-                        cart
+                        cart, storeName, storeId
                 );
 
                 if(tempTotal != 0.0) {

@@ -15,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Toast;
 
 
+import edu.neu.firebase.wecart.fragments.SellerHomeFragment;
 import edu.neu.firebase.wecart.market.MarketActivity;
 
 
@@ -51,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         table_user = database.getReference("users");
 
-
-
         userAuth = FirebaseAuth.getInstance();
 
         name = findViewById(R.id.editUsername);   //Get the username
@@ -87,10 +86,20 @@ public class MainActivity extends AppCompatActivity {
                             User user = dataSnapshot.child(UID.getText().toString()).getValue(User.class);
                             user.setUid(UID.getText().toString());
                             if(user.getPassword().equals(passwd.getText().toString())){
-                                Intent homeIntent = new Intent(MainActivity.this, Jump.class);
-                                Common.currentUser = user;
-                                startActivity(homeIntent);
-                                finish();
+                                // If login user is a seller
+                                // jump to "SellerBottomNavigationActivity"
+                                if (user.getUser_type().equals("Seller")) {
+                                    Intent sellerHomeIntent = new Intent(MainActivity.this,
+                                            SellerBottomNavigationActivity.class);
+                                    Common.currentUser = user;
+                                    startActivity(sellerHomeIntent);
+                                    finish();
+                                } else {
+                                    Intent homeIntent = new Intent(MainActivity.this, Jump.class);
+                                    Common.currentUser = user;
+                                    startActivity(homeIntent);
+                                    finish();
+                                }
                             }
 
                             else {

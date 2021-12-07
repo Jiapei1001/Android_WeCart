@@ -55,6 +55,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
     private Spinner UnitChoiceSpinner;
     private String productUnit;
 
+    private int storeId;
     private String productStore;
     private Product product;
     private Product existedProduct;
@@ -76,6 +77,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
 
         // TODO: productStore should be passed from the previous screen
         productStore = "Super QQ Fruit Store";
+        storeId = 2;
 
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
@@ -138,6 +140,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         product = new Product();
 
         product.setProductStore(productStore);
+        product.setStoreId(storeId);
 
         // check if product id exists
         checkProductIdButton = findViewById(R.id.btnCheckId);

@@ -22,9 +22,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 import edu.neu.firebase.wecart.Database.Database;
 
 public class CustomerSideProductDetailsActivity extends AppCompatActivity {
@@ -74,7 +71,7 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
         if (getIntent() != null) {
             curProductId = getIntent().getIntExtra("productId", 0);
             //if (!productId.isEmpty()) {
-                getDetailProduct();
+            getDetailProduct();
             //}
         }
     }
@@ -120,6 +117,8 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
                 for (DataSnapshot productSnapshot : snapshot.getChildren()) {
 
                     p = productSnapshot.getValue(Product.class);
+
+//                    Picasso.get().load(p.getProductImageId()).into(productImage);
 
                     // Show Picture that retrieved from Firebase Storage using Glide
                     assert p != null;
