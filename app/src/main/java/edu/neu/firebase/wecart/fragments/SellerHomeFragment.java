@@ -9,14 +9,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 import edu.neu.firebase.wecart.AddingProductActivity;
 import edu.neu.firebase.wecart.Common;
+import edu.neu.firebase.wecart.CreatingSellerStoreActivity;
 import edu.neu.firebase.wecart.InventoryActivity;
 import edu.neu.firebase.wecart.R;
 import edu.neu.firebase.wecart.User;
@@ -66,18 +72,12 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         Button addingProductButton = view.findViewById(R.id.btnAddProduct);
         addingProductButton.setOnClickListener(this);
         addingProductButton.setAnimation(myAnim);
-        Button importingProductsButton = view.findViewById(R.id.btnImportProducts);
-        importingProductsButton.setOnClickListener(this);
-        importingProductsButton.setAnimation(myAnim);
         Button inventoryButton = view.findViewById(R.id.btnInventory);
         inventoryButton.setOnClickListener(this);
         inventoryButton.setAnimation(myAnim);
         Button orderButton = view.findViewById(R.id.btnOrderCenter);
         orderButton.setOnClickListener(this);
         orderButton.setAnimation(myAnim);
-        Button revenueButton = view.findViewById(R.id.btnRevenue);
-        revenueButton.setOnClickListener(this);
-        revenueButton.setAnimation(myAnim);
 
         return view;
     }
@@ -85,22 +85,44 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.btnRevenue) {
-            // launch activity
-//            Intent intentClicky = new Intent(this, ClickyClickyActivity.class);
-//            startActivity(intentClicky);
+        if (id == R.id.btnCreateStore) {
+            if (curLoginUser.getStoreId() == 0) {
+                // launch activity
+                Intent intentCreatingStore = new Intent(getActivity(), CreatingSellerStoreActivity.class);
+                startActivity(intentCreatingStore);
+            } else {
+                Toast.makeText(getActivity(), "One login seller cannot create more than one stores", Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.btnAddProduct) {
-            Intent intentAddingProduct = new Intent(getActivity(), AddingProductActivity.class);
-            getActivity().startActivity(intentAddingProduct);
-        } else if (id == R.id.btnImportProducts) {
-//            Intent intentLocator = new Intent(this, LocatorActivity.class);
-//            startActivity(intentLocator);
+            // If the seller does not have a store
+            if (curLoginUser.getStoreId() == 0) {
+                Toast.makeText(getActivity(), "Please create a new store :)", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intentAddingProduct = new Intent(getActivity(), AddingProductActivity.class);
+                intentAddingProduct.putExtra("STORENAME", curLoginUser.getStoreName());
+                intentAddingProduct.putExtra("STOREID", curLoginUser.getStoreId());
+                requireActivity().startActivity(intentAddingProduct);
+            }
         } else if (id == R.id.btnInventory) {
-            Intent intentInventory = new Intent(getActivity(), InventoryActivity.class);
-            getActivity().startActivity(intentInventory);
+            if (curLoginUser.getStoreId() == 0) {
+                Toast.makeText(getActivity(), "Please create a new store :)", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intentInventory = new Intent(getActivity(), InventoryActivity.class);
+                intentInventory.putExtra("STORENAME", curLoginUser.getStoreName());
+                intentInventory.putExtra("STOREID", curLoginUser.getStoreId());
+                requireActivity().startActivity(intentInventory);
+            }
         } else if (id == R.id.btnOrderCenter) {
-//            Intent intentInventory = new Intent(this, InventoryActivity.class);
-//            startActivity(intentInventory);
+            // Fragment Transactions: Ref - https://developer.android.com/guide/fragments/transactions?authuser=1
+            //
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.navHostFragment, SellerOrdersFragment.class, null); //My second Fragment
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+//            getActivity().getActionBar().setTitle("Home");
+//            Intent intentOrderCenter = new Intent(getActivity(), SellerOrdersFragment.class);
+//            requireActivity().startActivity(intentOrderCenter);
         }
         v.startAnimation(myAnim);
 

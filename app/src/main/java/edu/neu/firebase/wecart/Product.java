@@ -12,6 +12,8 @@ public class Product {
     private String productImageId;
     private Boolean inStock;
     private String productUnit;
+    // Use for multiple filters with firebase
+    private String storeIdToProductId;
 
     private int totalInCart;
 
@@ -105,6 +107,14 @@ public class Product {
 
     public void setProductUnit(String productUnit) {
         this.productUnit = productUnit;
+    }
+
+    public String getStoreIdToProductId() {
+        return getStoreId() + "_" + getProductId();
+    }
+
+    public void setStoreIdToProduct(String storeIdToProduct) {
+        this.storeIdToProductId = storeIdToProduct;
     }
 
     @Override

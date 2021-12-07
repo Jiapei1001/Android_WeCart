@@ -25,6 +25,7 @@ import edu.neu.firebase.wecart.OrderViewHolder;
 import edu.neu.firebase.wecart.R;
 import edu.neu.firebase.wecart.Request;
 import edu.neu.firebase.wecart.SellerOrdersViewHolder;
+import edu.neu.firebase.wecart.User;
 
 public class SellerOrdersFragment extends Fragment {
 
@@ -37,32 +38,12 @@ public class SellerOrdersFragment extends Fragment {
 
     private FirebaseRecyclerAdapter adapter;
 
+    private User curLoginUser;
+    String storeName;
+
     public SellerOrdersFragment() {
         // Required empty public constructor
     }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment SellerOrdersFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static SellerOrdersFragment newInstance(String param1, String param2) {
-//        SellerOrdersFragment fragment = new SellerOrdersFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,10 +51,8 @@ public class SellerOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_orders, container, false);
 
-        // TODO： mCurrentUser
-        FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        // TODO：getStoreName or Id
-        String storeName = "Super QQ Fruit Store";
+        curLoginUser = Common.currentUser;
+        storeName = curLoginUser.getStoreName();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mRequest = mDatabase.child("request");

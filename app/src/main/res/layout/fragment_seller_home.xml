@@ -79,21 +79,6 @@
             app:layout_constraintVertical_bias="0.862" />
 
         <Button
-            android:id="@+id/btnRevenue"
-            android:layout_width="106dp"
-            android:layout_height="106dp"
-            android:layout_marginBottom="148dp"
-            android:text="Revenue"
-            android:textAllCaps="false"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.319"
-            app:layout_constraintStart_toEndOf="@+id/btnOrderCenter"
-            app:layout_constraintTop_toBottomOf="@+id/btnImportProducts"
-            app:layout_constraintVertical_bias="0.564" />
-
-        <Button
             android:id="@+id/btnOrderCenter"
             android:layout_width="106dp"
             android:layout_height="106dp"
@@ -104,10 +89,10 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.463"
+            app:layout_constraintHorizontal_bias="0.733"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAddProduct"
-            app:layout_constraintVertical_bias="0.586" />
+            app:layout_constraintVertical_bias="0.564" />
 
         <Button
             android:id="@+id/btnAddProduct"
@@ -120,10 +105,10 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/waveHeader"
-            app:layout_constraintVertical_bias="0.563" />
+            app:layout_constraintVertical_bias="0.564" />
 
         <Button
             android:id="@+id/btnCreateStore"
@@ -138,7 +123,7 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnAddProduct"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.609"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/waveHeader"
             app:layout_constraintVertical_bias="0.564" />
@@ -155,28 +140,10 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnOrderCenter"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.616"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnCreateStore"
-            app:layout_constraintVertical_bias="0.586" />
-
-        <Button
-            android:id="@+id/btnImportProducts"
-            android:layout_width="106dp"
-            android:layout_height="106dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="256dp"
-            android:text="Importing Products"
-            android:textAllCaps="false"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/btnAddProduct"
-            app:layout_constraintTop_toBottomOf="@+id/waveHeader"
-            app:layout_constraintVertical_bias="0.563" />
+            app:layout_constraintVertical_bias="0.564" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

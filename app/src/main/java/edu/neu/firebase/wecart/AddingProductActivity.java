@@ -75,9 +75,9 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_product);
 
-        // TODO: productStore should be passed from the previous screen
-        productStore = "Super QQ Fruit Store";
-        storeId = 2;
+        // Get the current productStore and storeId
+        productStore = this.getIntent().getStringExtra("STORENAME");
+        storeId = this.getIntent().getIntExtra("STOREID", 0);
 
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
@@ -89,8 +89,10 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         submitButton = findViewById(R.id.btnSubmit);
         productImage = findViewById(R.id.imgViewProduct);
 
-        // Get the current largest product Id, so that means if the input is a new product,
+        // Get the current largest product Id in this store, so that means if the input is a new product,
         // the new product id will be the next one.
+        // Notice: Multiple orderbychild() queries is not supported by firebase
+//        Query query = mProducts.orderByChild("storeId").equalTo(storeId).orderByChild("productId").limitToLast(1);
         Query query = mProducts.orderByChild("productId").limitToLast(1);
         query.addValueEventListener(new ValueEventListener() {
 
@@ -98,6 +100,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren()) {
+                    // Todo: Advanced feature - auto-increment product id
                     StringBuilder newProductHint = new StringBuilder();
                     newProductHint.append("The new product Id should start from ")
                             .append(myDataSnapshot.getValue(Product.class).getProductId() + 1);
@@ -195,8 +198,11 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
     private void getProductData() {
         // Set product id
         int curProductId = Integer.parseInt(productIdTxt.getText().toString());
+        // To make sure the same store's product does not have the same productId (multiple filters)
         // Check if the product exists in firebase database by the product id
-        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+        String storeIdToProductId = storeId + "_" + curProductId;
+        Query query = mProducts.orderByChild("storeIdToProductId").equalTo(storeIdToProductId);
+//        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -292,8 +298,6 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             // it will be stored inside images folder in firebase storage
             StorageReference reference = mStorageRef.child(productImageId);
 
-            // TODO: can use user auth id instead of uuid if the app has firebase auth or use System.currentTimeMillis()
-
             // Store the file
             reference.putFile(productImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -314,6 +318,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         int curProductId = Integer.parseInt(productIdTxt.getText().toString());
         product.setProductId(curProductId);
 
+        product.setStoreIdToProduct(storeId + "_" + curProductId);
         // Set product name and brand
         product.setProductName(productNameTxt.getText().toString().trim());
         product.setProductBrand(productBrandTxt.getText().toString().trim());

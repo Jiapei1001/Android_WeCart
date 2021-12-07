@@ -167,7 +167,7 @@ import com.google.firebase.storage.UploadTask;
 public class RegisterActivity extends AppCompatActivity {
     RadioGroup get_user_type;
     String user_type;
-    EditText name,password;
+    EditText name, password;
     ImageView profile;
     Button btn;
     Uri imageUri;
@@ -186,9 +186,9 @@ public class RegisterActivity extends AppCompatActivity {
         get_user_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.get_shop){
+                if (checkedId == R.id.get_shop) {
                     user_type = "Seller";
-                }else if (checkedId == R.id.get_user){
+                } else if (checkedId == R.id.get_user) {
                     user_type = "User";
                 }
             }
@@ -199,13 +199,13 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (name.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "Please enter user Name!  :)", Toast.LENGTH_SHORT).show();
-                }else if (password.length() == 0) {
+                } else if (password.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "Please enter Password!  :)", Toast.LENGTH_SHORT).show();
-                }else if (user_type.length() == 0){
+                } else if (user_type.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "Please Choose User type!  :)", Toast.LENGTH_SHORT).show();
-                }else if (profile == null){
+                } else if (profile == null) {
                     Toast.makeText(RegisterActivity.this, "Please upload user picture!  :)", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     signup();
                 }
             }
@@ -228,18 +228,18 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void signup() {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(name.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(name.getText().toString(), password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
 
-                    final String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    final StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("users").child(uid);
+                    final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("users").child(uid);
 
                     storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Uri> task) {
@@ -251,23 +251,24 @@ public class RegisterActivity extends AppCompatActivity {
                                         user.profile_image = profile_image;
                                         user.uid = uid;
                                         FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
-                                        Toast.makeText(RegisterActivity.this,"Success Create",Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                                        Toast.makeText(RegisterActivity.this, "Success Create", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                     }
                                 });
-                            }else{
+                            } else {
 
-                                Toast.makeText(RegisterActivity.this,"Error on upload Data",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Error on upload Data", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                }else{
+                } else {
 
-                    Toast.makeText(RegisterActivity.this,"Error on email name!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error on email name!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

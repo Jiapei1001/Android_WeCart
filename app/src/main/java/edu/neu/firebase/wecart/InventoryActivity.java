@@ -35,6 +35,9 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
     private final ArrayList<Product> productList = new ArrayList<>();
     RecyclerView inventoryRecyclerView;
 
+    String currStore;
+    int storeId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,9 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
         // call method to build the recyclerView
         createRecyclerView();
 
-        // Todo: obtain current store
-        String currStore = "Super QQ Fruit Store";
+        // Get the current storeName and storeId
+        currStore = this.getIntent().getStringExtra("STORENAME");
+        storeId = this.getIntent().getIntExtra("STOREID", 0);
 
         TextView inventoryTitle = (TextView) this.findViewById(R.id.textViewInventory);
         inventoryTitle.setText(R.string.inventory);
