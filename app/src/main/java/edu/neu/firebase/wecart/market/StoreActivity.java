@@ -54,6 +54,15 @@ public class StoreActivity extends AppCompatActivity {
             }
         });
 
+//        ImageView goToProductBtn = findViewById(R.id.storeMakeOrder);
+//        goToProductBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), CustomerSideProductListActivity.class);
+//                intent.putExtra("storeId", currStoreId);
+//                startActivity(intent);
+//            }
+//        });
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
