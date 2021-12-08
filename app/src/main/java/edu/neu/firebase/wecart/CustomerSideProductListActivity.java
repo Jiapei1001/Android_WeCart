@@ -98,7 +98,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
 
         if(getIntent() != null){
-            //storeId = this.getIntent().getIntExtra("STOREID", 0);
+            storeId = this.getIntent().getIntExtra("storeId", 0);
                 loadProduct(storeId);
         }
 
