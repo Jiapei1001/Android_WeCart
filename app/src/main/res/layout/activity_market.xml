@@ -58,6 +58,34 @@
                 app:layout_constraintStart_toStartOf="@id/market01"
                 app:layout_constraintTop_toTopOf="@id/market01" />
 
+            <ImageButton
+                android:id="@+id/store3"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="1700dp"
+                android:background="@null"
+                android:onClick="onClick"
+                android:rotation="20"
+                android:scaleType="fitCenter"
+                android:src="@drawable/store_03"
+                app:layout_constraintEnd_toEndOf="@id/market01"
+                app:layout_constraintHorizontal_bias="0.88"
+                app:layout_constraintStart_toStartOf="@id/market01"
+                app:layout_constraintTop_toTopOf="@id/market01" />
+
+            <ImageView
+                android:id="@+id/storeGoBack"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="60dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/store_go_back" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
