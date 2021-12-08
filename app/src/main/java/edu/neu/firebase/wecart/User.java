@@ -1,11 +1,15 @@
 package edu.neu.firebase.wecart;
 
+import java.util.TreeMap;
+
 public class User {
     public String username;
     public String user_type;
     public String profile_image;
     public String password;
     public String uid;
+    public int storeId;
+    public String storeName;
 
     public User() {
         // Default constructor
@@ -57,5 +61,21 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

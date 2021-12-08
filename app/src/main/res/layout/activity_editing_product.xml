@@ -93,6 +93,7 @@
             android:layout_below="@+id/textViewInStock"
             android:layout_marginTop="0dp"
             android:ems="10"
+            android:textSize="12sp"
             android:hint="Product Id"
             android:inputType="number"
             android:selectAllOnFocus="true"
@@ -105,6 +106,7 @@
             android:layout_below="@+id/editTextProductId"
             android:layout_marginTop="0dp"
             android:ems="10"
+            android:textSize="12sp"
             android:hint="Product Name"
             android:inputType="text"
             android:selectAllOnFocus="true"
@@ -116,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextProductName"
             android:ems="10"
+            android:textSize="12sp"
             android:hint="Brand"
             android:inputType="text"
             android:text="" />
@@ -131,6 +134,7 @@
                 android:layout_below="@+id/editTextBrand"
                 android:digits="0123456789."
                 android:ems="10"
+                android:textSize="12sp"
                 android:hint="Price"
                 android:inputType="numberDecimal"
                 android:text="" />
@@ -140,6 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textSize="12sp"
                 android:text="@string/per" />
 
             <Spinner
@@ -156,6 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextPrice"
             android:ems="10"
+            android:textSize="12sp"
             android:hint="Quantity"
             android:inputType="number"
             android:text="" />
@@ -166,6 +172,7 @@
             android:id="@+id/textViewStore"
             android:layout_width="242dp"
             android:layout_height="37dp"
+            android:textSize="12sp"
             android:layout_below="@+id/editTextQuantity"
             android:text="Store Name" />
 

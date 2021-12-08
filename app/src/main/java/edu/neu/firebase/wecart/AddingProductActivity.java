@@ -1,21 +1,10 @@
 package edu.neu.firebase.wecart;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import android.content.ContentResolver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,20 +15,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -48,41 +41,43 @@ import java.util.UUID;
  * Upload image to firebase storage (ref: https://www.youtube.com/watch?v=7p4MBsz__ao)
  */
 public class AddingProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    Button selectProductButton, submitButton, checkProductIdButton;
-    ImageView productImage;
+    private Button selectProductButton, submitButton, checkProductIdButton;
+    private ImageView productImage;
 
-    EditText productIdTxt;
-    EditText productNameTxt;
-    EditText productBrandTxt;
-    EditText priceTxt;
-    EditText quantityTxt;
-    TextView productStoreTxt;
-    TextView inStockTxt;
+    private EditText productIdTxt;
+    private EditText productNameTxt;
+    private EditText productBrandTxt;
+    private EditText priceTxt;
+    private EditText quantityTxt;
+    private TextView productStoreTxt;
+    private TextView inStockTxt;
+    private TextView newProductIdTxt;
 
-    Spinner UnitChoiceSpinner;
-    String productUnit;
+    private Spinner UnitChoiceSpinner;
+    private String productUnit;
 
-    String productStore;
-    Product product;
-    Product existedProduct;
+    private int storeId;
+    private String productStore;
+    private Product product;
+    private Product existedProduct;
 
-    FirebaseStorage storage;
+    private FirebaseStorage storage;
+    private StorageReference mStorageRef;
     private DatabaseReference mDatabase; //for insert database object value
     private DatabaseReference mProducts;
 
-    Uri productImageUri;
+    private Uri productImageUri;
 
-    String productImageId;
-
-    StorageReference mStorageRef;
+    private String productImageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_product);
 
-        // TODO: productStore should be passed from the previous screen
-        productStore = "Super QQ Fruit Store";
+        // Get the current productStore and storeId
+        productStore = this.getIntent().getStringExtra("STORENAME");
+        storeId = this.getIntent().getIntExtra("STOREID", 0);
 
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
@@ -93,6 +88,31 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         selectProductButton = findViewById(R.id.btnSelectProduct);
         submitButton = findViewById(R.id.btnSubmit);
         productImage = findViewById(R.id.imgViewProduct);
+
+        // Get the current largest product Id in this store, so that means if the input is a new product,
+        // the new product id will be the next one.
+        // Notice: Multiple orderbychild() queries is not supported by firebase
+//        Query query = mProducts.orderByChild("storeId").equalTo(storeId).orderByChild("productId").limitToLast(1);
+        Query query = mProducts.orderByChild("productId").limitToLast(1);
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren()) {
+                    // Todo: Advanced feature - auto-increment product id
+                    StringBuilder newProductHint = new StringBuilder();
+                    newProductHint.append("The new product Id should start from ")
+                            .append(myDataSnapshot.getValue(Product.class).getProductId() + 1);
+                    productIdTxt.setHint(newProductHint);
+                }
+            }
+
+            public void onCancelled(DatabaseError firebaseError) {
+
+            }
+
+        });
 
         productIdTxt = findViewById(R.id.editTextProductId);
         productNameTxt = findViewById(R.id.editTextProductName);
@@ -123,6 +143,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         product = new Product();
 
         product.setProductStore(productStore);
+        product.setStoreId(storeId);
 
         // check if product id exists
         checkProductIdButton = findViewById(R.id.btnCheckId);
@@ -150,7 +171,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        // Upload the image to firebase storage
+        // Upload the images and product data to firebase storage
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,8 +198,11 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
     private void getProductData() {
         // Set product id
         int curProductId = Integer.parseInt(productIdTxt.getText().toString());
+        // To make sure the same store's product does not have the same productId (multiple filters)
         // Check if the product exists in firebase database by the product id
-        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+        String storeIdToProductId = storeId + "_" + curProductId;
+        Query query = mProducts.orderByChild("storeIdToProductId").equalTo(storeIdToProductId);
+//        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -247,10 +271,10 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
                             mProducts.child(key).child("price").setValue(product.getPrice());
                         } else if (!existedProduct.getProductUnit().equals(product.getProductUnit())) {
                             mProducts.child(key).child("productUnit").setValue(product.getProductUnit());
-                            // TODO: update product image (check if the image is the same one)
-                        } else if (existedProduct.getProductImageId() == null) {
+                        } else if (!existedProduct.getProductImageId().equals(product.getProductImageId())) {
                             mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
                         }
+                        Toast.makeText(AddingProductActivity.this, "Product Information was Updated Successfully.", Toast.LENGTH_SHORT).show();
                     } else {
                         inStockTxt.setText(R.string.not_in_stock_message);
                     }
@@ -274,15 +298,13 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             // it will be stored inside images folder in firebase storage
             StorageReference reference = mStorageRef.child(productImageId);
 
-            // TODO: can use user auth id instead of uuid if the app has firebase auth or use System.currentTimeMillis()
-
             // Store the file
             reference.putFile(productImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     if (task.isSuccessful()) {
                         // Upload image successfully
-                        Toast.makeText(AddingProductActivity.this, "Product Image Uploaded Successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddingProductActivity.this, "Product Image was Uploaded Successfully.", Toast.LENGTH_SHORT).show();
                     } else {
                         // Fail to upload
                         Toast.makeText(AddingProductActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
@@ -295,6 +317,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
 
         int curProductId = Integer.parseInt(productIdTxt.getText().toString());
         product.setProductId(curProductId);
+        product.setStoreIdToProduct(storeId + "_" + curProductId);
 
         // Set product name and brand
         product.setProductName(productNameTxt.getText().toString().trim());
@@ -318,6 +341,10 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             updateProductData();
         } else {
             mProducts.push().setValue(product);
+            // Clear all imageView and EditTxt
+            productImage.setImageDrawable(null);
+            priceTxt.setText("");
+            clearForm((ViewGroup) findViewById(R.id.linearlayoutForTextView));
         }
     }
 
@@ -346,5 +373,15 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void clearForm(ViewGroup group) {
+        for (int i = 0, count = group.getChildCount(); i < count; ++i) {
+            View view = group.getChildAt(i);
+            if (view instanceof EditText) {
+                ((EditText)view).setText("");
+            }
+
+        }
     }
 }

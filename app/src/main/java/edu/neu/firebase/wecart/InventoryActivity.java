@@ -2,10 +2,6 @@ package edu.neu.firebase.wecart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +17,6 @@ import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +35,9 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
     private final ArrayList<Product> productList = new ArrayList<>();
     RecyclerView inventoryRecyclerView;
 
+    String currStore;
+    int storeId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +50,9 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
         // call method to build the recyclerView
         createRecyclerView();
 
-        // Todo: obtain current store
-        String currStore = "Super QQ Fruit Store";
+        // Get the current storeName and storeId
+        currStore = this.getIntent().getStringExtra("STORENAME");
+        storeId = this.getIntent().getIntExtra("STOREID", 0);
 
         TextView inventoryTitle = (TextView) this.findViewById(R.id.textViewInventory);
         inventoryTitle.setText(R.string.inventory);
@@ -164,7 +163,7 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
 
     private void createRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        inventoryRecyclerView = (RecyclerView) this.findViewById(R.id.recyclerViewInventory);
+        inventoryRecyclerView = this.findViewById(R.id.recyclerViewInventory);
         inventoryRecyclerView.setHasFixedSize(true);
         this.inventoryAdapter = new InventoryAdapter(getApplicationContext(), this.productList, this);
         inventoryRecyclerView.setAdapter(this.inventoryAdapter);
@@ -173,9 +172,10 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
 
     @Override
     public void onEditProductClick(int position) {
-        Intent intentEditProduct = new Intent(this, EditProductActivity.class);
-        intentEditProduct.putExtra("curProductId", productList.get(position).getProductId());
-
+        Intent intentEditProduct = new Intent(this, EditingProductActivity.class);
+        intentEditProduct.putExtra("CURPRODUCTID", productList.get(position).getProductId());
+        intentEditProduct.putExtra("STORENAME", currStore);
+        intentEditProduct.putExtra("STOREID", storeId);
         startActivity(intentEditProduct);
     }
 }

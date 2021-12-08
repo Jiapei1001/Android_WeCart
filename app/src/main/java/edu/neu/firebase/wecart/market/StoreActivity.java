@@ -21,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import edu.neu.firebase.wecart.GlideApp;
 import edu.neu.firebase.wecart.R;
 
 public class StoreActivity extends AppCompatActivity {
@@ -71,7 +70,7 @@ public class StoreActivity extends AppCompatActivity {
                     // store btn
                     ImageView storeBtn = findViewById(R.id.storeDetailBtn);
                     StorageReference storeBtnOnline = storageRef.child(String.valueOf(currStore.getStoreBtn()));
-                    GlideApp.with(getApplicationContext()).load(storeBtnOnline).into(storeBtn);
+                    Glide.with(getApplicationContext()).load(storeBtnOnline).into(storeBtn);
 
                     // name
                     TextView storeName = findViewById(R.id.storeDetailName);
