@@ -33,6 +33,7 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
     FloatingActionButton cartBtn;
     ElegantNumberButton quantityBtn;
 
+    int storeId;
     int curProductId;
 
     private DatabaseReference mDatabase;
@@ -69,7 +70,9 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
         productImage = findViewById(R.id.img_product);
 
         if (getIntent() != null) {
-            curProductId = getIntent().getIntExtra("productId", 0);
+            Bundle extras = getIntent().getExtras();
+            storeId = extras.getInt("storeId");
+            curProductId = extras.getInt("productId");
             //if (!productId.isEmpty()) {
             getDetailProduct();
             //}
@@ -107,7 +110,8 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
         StorageReference mStorageRef = storage.getReference();
 
         // Check if the product exists in firebase database by the product id
-        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+        String storeIdToProductId = storeId + "_" + curProductId;
+        Query query = mProducts.orderByChild("storeIdToProductId").equalTo(storeIdToProductId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -50,7 +50,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
     FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
 
-    String StoreId = "Super QQ Fruit Store";
+    int storeId = 1;
 
     TextView txtFullName;
 
@@ -60,10 +60,8 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         setContentView(R.layout.activity_customer_side_product_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // if (toolbar != null) {
         toolbar.setTitle("Grocery");
         setSupportActionBar(toolbar);
-        //}
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference("products");
@@ -83,23 +81,15 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        // if (drawer != null) {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        //}
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //if (navigationView != null) {
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         txtFullName = headerView.findViewById(R.id.txtFullName);
         txtFullName.setText(Common.currentUser.getUsername());
-        //}
-
-
-        //Set name for user
-
 
 
         recyclerView = findViewById(R.id.recycler_product);
@@ -108,23 +98,17 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
 
         if(getIntent() != null){
-            //int curProductId = Integer.parseInt(productIdTxt.getText().toString());
-//            String curProductId = getIntent().getStringExtra("StoreId");
-//            System.out.println("----------");
-//            System.out.println(curProductId);
-//            System.out.println("----------");
-            if(!StoreId.isEmpty()){
-                loadProduct(StoreId);
-            }
+            //storeId = this.getIntent().getIntExtra("storeId", 0);
+            loadProduct(storeId);
         }
 
     }
 
-    private void loadProduct(String StoreId) {
+    private void loadProduct(int StoreId) {
         // Check if the product exists in firebase database by the product id
         //Query query = mProducts.orderByChild("productId").equalTo(curProductId);
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("products").orderByChild("productStore").equalTo(StoreId);
+        Query query = FirebaseDatabase.getInstance().getReference().child("products").orderByChild("storeId").equalTo(StoreId);
 
         FirebaseRecyclerOptions<Product> options =
                 new FirebaseRecyclerOptions.Builder<Product>()
@@ -151,9 +135,6 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
                 holder.txtProductName.setText(p.getProductName());
                 holder.txtProductDescription.setText(p.getProductBrand());
                 holder.txtProductPrice.setText(String.valueOf(p.getPrice()));
-                System.out.println("-------");
-                System.out.println(p.getProductImageId());
-                System.out.println("-------");
                 //Picasso.get().load(p.getProductImageId()).into(holder.imgProduct);
                 // Show Picture that retrieved from Firebase Storage using Glide
                 StorageReference imagesStorageRef = mStorageRef.child(String.valueOf(p.getProductImageId()));
@@ -164,7 +145,10 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         Intent CustomerSideProductDetailsActivity = new Intent(CustomerSideProductListActivity.this, CustomerSideProductDetailsActivity.class);
-                        CustomerSideProductDetailsActivity.putExtra("productId", p.getProductId());
+                        Bundle extras = new Bundle();
+                        extras.putInt("productId", p.getProductId());
+                        extras.putInt("storeId", p.getStoreId());
+                        CustomerSideProductDetailsActivity.putExtras(extras);
                         startActivity(CustomerSideProductDetailsActivity);
                     }
                 });
@@ -197,6 +181,9 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
             Intent singout = new Intent(CustomerSideProductListActivity.this,MainActivity.class);
             Toast.makeText(CustomerSideProductListActivity.this,"Sign Out",Toast.LENGTH_SHORT).show();
             startActivity(singout);
+        } else if (id == R.id.nav_chat) {
+            Intent chatIntent = new Intent(CustomerSideProductListActivity.this,ChatActivity.class);
+            startActivity(chatIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
