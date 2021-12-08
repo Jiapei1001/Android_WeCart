@@ -50,7 +50,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
     FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
 
-    int storeId = 1;
+    int storeId;
 
     TextView txtFullName;
 
