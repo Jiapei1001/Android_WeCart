@@ -6,11 +6,14 @@ public class Product {
     private String productName;
     private String productBrand;
     private String productStore;
+    private int storeId;
     private double price;
     private int quantity;
     private String productImageId;
     private Boolean inStock;
     private String productUnit;
+    // Use for multiple filters with firebase
+    private String storeIdToProductId;
 
     private int totalInCart;
 
@@ -58,6 +61,14 @@ public class Product {
         this.productStore = productStore;
     }
 
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -98,6 +109,14 @@ public class Product {
         this.productUnit = productUnit;
     }
 
+    public String getStoreIdToProductId() {
+        return getStoreId() + "_" + getProductId();
+    }
+
+    public void setStoreIdToProduct(String storeIdToProduct) {
+        this.storeIdToProductId = storeIdToProduct;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -109,6 +128,7 @@ public class Product {
                 ", quantity=" + quantity +
                 ", productImageId='" + productImageId + '\'' +
                 ", inStock=" + inStock +
+                ", productUnit='" + productUnit + '\'' +
                 '}';
     }
 }

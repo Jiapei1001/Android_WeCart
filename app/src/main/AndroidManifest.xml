@@ -16,6 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
+<!--        <activity-->
+<!--            android:name=".ImportingProductActivity"-->
+<!--            android:exported="true" />-->
+        <activity
+            android:name=".EditingProductActivity"
+            android:exported="true" />
+        <activity
+            android:name=".InventoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CreatingSellerStoreActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SellerBottomNavigationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true" />
         <activity
             android:name=".OrderStatusActivity"
             android:exported="true" />
@@ -26,7 +44,7 @@
             android:name=".market.StoreActivity"
             android:exported="true" />
         <activity
-            android:name=".market.MarketActivity"
+            android:name=".market.Market01Activity"
             android:exported="true" />
         <activity
             android:name=".Jump"
@@ -39,8 +57,8 @@
             android:exported="true" />
         <activity
             android:name=".CustomerSideProductListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddingProductActivity"
             android:exported="true" />
@@ -53,6 +71,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

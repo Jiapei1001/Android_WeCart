@@ -39,17 +39,17 @@ public class OrderStatusActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        loadOrders(Common.currentUser.getUid());
+        loadOrders(Common.currentUser.getUsername());
     }
 
-    private void loadOrders(String id) {
+    private void loadOrders(String name) {
 
         Query query = FirebaseDatabase
                 .getInstance()
                 .getReference()
                 .child("request")
                 .orderByChild("name")
-                .equalTo(id);
+                .equalTo(name);
 
         FirebaseRecyclerOptions<Request> options =
                 new FirebaseRecyclerOptions.Builder<Request>()

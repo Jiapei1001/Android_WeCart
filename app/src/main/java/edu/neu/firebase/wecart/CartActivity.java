@@ -40,11 +40,14 @@ public class CartActivity extends AppCompatActivity {
 
     double tempTotal;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        // Todo: storeName, storeId
+        String storeName = "Mary's County Ranch";
+        int storeId = 1;
 
         //Firebase
         database = FirebaseDatabase.getInstance();
@@ -67,9 +70,9 @@ public class CartActivity extends AppCompatActivity {
 
                 Request request = new Request(
 
-                        Common.currentUser.getUid(),
+                        Common.currentUser.getUsername(),
                         txtTotalPrice.getText().toString(),
-                        cart
+                        cart, storeName, storeId
                 );
 
 

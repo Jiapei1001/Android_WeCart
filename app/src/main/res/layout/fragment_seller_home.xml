@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SellerHomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--code for wave animation-->
+
+        <!--            android:layout_gravity="fill"-->
+        <!--            android:layout_marginTop="136dp"-->
+        <!--            android:background="@drawable/market_01"-->
+
+        <!--            app:backgroundTint="@null"-->
+
+        <com.scwang.wave.MultiWaveHeader
+            android:id="@+id/waveHeader"
+            android:layout_width="412dp"
+            android:layout_height="126dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:mwhCloseColor="#71DFE7"
+            app:mwhStartColor="#C2FFF9"
+            app:mwhWaveHeight="60dp" />
+
+        <TextView
+            android:id="@+id/textViewHome"
+            android:layout_width="89dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="300dp"
+            android:fontFamily="@font/merriweather_blackitalic"
+            android:gravity="center"
+            android:text="Home"
+            android:textColor="#E26A2C"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.143" />
+
+        <TextView
+            android:id="@+id/currentUserGreetingTextView"
+            android:layout_width="281dp"
+            android:layout_height="45dp"
+            android:fontFamily="@font/merriweather_blackitalic"
+            android:gravity="center"
+            android:text="Hello"
+            android:textColor="#344CB7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.207" />
+
+        <TextView
+            android:id="@+id/sellerInstructionTextView"
+            android:layout_width="317dp"
+            android:layout_height="56dp"
+            android:fontFamily="@font/merriweather_blackitalic"
+            android:gravity="center"
+            android:text="Instructions"
+            android:textColor="#116530"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.862" />
+
+        <Button
+            android:id="@+id/btnOrderCenter"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="148dp"
+            android:text="Orders"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.733"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddProduct"
+            app:layout_constraintVertical_bias="0.564" />
+
+        <Button
+            android:id="@+id/btnAddProduct"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="256dp"
+            android:text="Adding Product"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waveHeader"
+            app:layout_constraintVertical_bias="0.564" />
+
+        <Button
+            android:id="@+id/btnCreateStore"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="256dp"
+            android:text="Creating Store"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddProduct"
+            app:layout_constraintHorizontal_bias="0.609"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waveHeader"
+            app:layout_constraintVertical_bias="0.564" />
+
+        <Button
+            android:id="@+id/btnInventory"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="148dp"
+            android:text="Inventory"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnOrderCenter"
+            app:layout_constraintHorizontal_bias="0.616"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCreateStore"
+            app:layout_constraintVertical_bias="0.564" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
