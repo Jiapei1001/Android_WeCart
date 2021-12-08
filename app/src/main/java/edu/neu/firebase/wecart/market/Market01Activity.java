@@ -34,6 +34,10 @@ public class Market01Activity extends AppCompatActivity {
                 storeId = idToString(R.id.store4);
                 openClickyActivity(storeId);
                 break;
+            case R.id.store5:
+                storeId = idToString(R.id.store5);
+                openClickyActivity(storeId);
+                break;
         }
     }
 
