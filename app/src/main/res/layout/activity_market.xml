@@ -45,7 +45,7 @@
 
             <ImageButton
                 android:id="@+id/store2"
-                android:layout_width="220dp"
+                android:layout_width="240dp"
                 android:layout_height="260dp"
                 android:layout_marginTop="300dp"
                 android:background="@null"
@@ -70,6 +70,36 @@
                 android:src="@drawable/store_03"
                 app:layout_constraintEnd_toEndOf="@id/market01"
                 app:layout_constraintHorizontal_bias="0.88"
+                app:layout_constraintStart_toStartOf="@id/market01"
+                app:layout_constraintTop_toTopOf="@id/market01" />
+
+            <ImageButton
+                android:id="@+id/store4"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="2100dp"
+                android:background="@null"
+                android:onClick="onClick"
+                android:rotation="-16"
+                android:scaleType="fitCenter"
+                android:src="@drawable/store_04"
+                app:layout_constraintEnd_toEndOf="@id/market01"
+                app:layout_constraintHorizontal_bias="0.78"
+                app:layout_constraintStart_toStartOf="@id/market01"
+                app:layout_constraintTop_toTopOf="@id/market01" />
+
+            <ImageButton
+                android:id="@+id/store5"
+                android:layout_width="210dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="1120dp"
+                android:background="@null"
+                android:onClick="onClick"
+                android:rotation="-70"
+                android:scaleType="fitCenter"
+                android:src="@drawable/store_05"
+                app:layout_constraintEnd_toEndOf="@id/market01"
+                app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="@id/market01"
                 app:layout_constraintTop_toTopOf="@id/market01" />
 
