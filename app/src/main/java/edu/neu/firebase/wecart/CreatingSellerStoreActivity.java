@@ -5,18 +5,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,8 +36,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import edu.neu.firebase.wecart.fragments.SellerHomeFragment;
-import edu.neu.firebase.wecart.fragments.SellerOrdersFragment;
 import edu.neu.firebase.wecart.market.Store;
 
 public class CreatingSellerStoreActivity extends AppCompatActivity {
@@ -63,12 +57,12 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
     private EditText storeEmailTxt;
     private EditText pickupAddressTxt;
 
-    private User curLoginUser;
     private int storeId;
 
     private FirebaseStorage storage;
     private DatabaseReference mDatabase; //for insert database object value
     private DatabaseReference mStores;
+    private DatabaseReference mUsers;
     private StorageReference mStorageRef;
 
     private Store newStore;
@@ -78,7 +72,7 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
     private String storeImage;
     private String storeOwnerImage;
 
-    private Double longtitude;
+    private Double longitude;
     private Double latitude;  // pickup position for delivery
 
     @Override
@@ -86,13 +80,12 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creating_seller_store);
 
-        curLoginUser = Common.currentUser;
-
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStores = mDatabase.child("stores");
+        mUsers = mDatabase.child("users");
 
         Button selectStoreBtnButton = findViewById(R.id.btnSelectStoreButton);
         selectStoreImageButton = findViewById(R.id.btnSelectStoreImage);
@@ -159,6 +152,7 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addStoreInfoToSeller();
                 // upload image on button click
                 storeInfoUploader();
             }
@@ -211,10 +205,38 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
                 }
             });
 
+
+    private void addStoreInfoToSeller() {
+        // Set login user's store name and store id
+        String commonUser = Common.currentUser.getUsername();
+        Query query2 = mUsers.orderByChild("username").equalTo(Common.currentUser.getUsername());
+        query2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot myDataSnapshot : dataSnapshot.getChildren()) {
+                    if (myDataSnapshot.exists()) {
+                        User user = myDataSnapshot.getValue(User.class);
+                        String key = myDataSnapshot.getKey();
+
+                        mUsers.child(key).child("storeId").setValue(storeId);
+                        mUsers.child(key).child("storeName").setValue(storeNameTxt.getText().toString().trim());
+                    }
+
+                }
+            }
+
+            public void onCancelled(DatabaseError firebaseError) {
+
+            }
+
+        });
+    }
+
     private void storeInfoUploader() {
 
         // If an image is uploaded
-        if (storeDetailBtnImageView.getDrawable() != null) {
+        if (storeDetailBtnImageView != null) {
             storeBtnImage = "stores/storeBtns/" + UUID.randomUUID().toString() + "." + getExtension(storeDetailBtnImageUri);
             // Create a reference to store the image in firebase storage
             // it will be stored inside images folder in firebase storage
@@ -235,7 +257,7 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
             });
         }
 
-        if (storeImageView.getDrawable() != null) {
+        if (storeImageView != null) {
             storeImage = "stores/storeImages/" + UUID.randomUUID().toString() + "." + getExtension(storeImageUri);
             // Create a reference to store the image in firebase storage
             // it will be stored inside images folder in firebase storage
@@ -256,7 +278,7 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
             });
         }
 
-        if (storeOwnerImageView.getDrawable() != null) {
+        if (storeOwnerImageView != null) {
             storeOwnerImage = "stores/storeOwners/" + UUID.randomUUID().toString() + "." + getExtension(storeOwnerImageUri);
             // Create a reference to store the image in firebase storage
             // it will be stored inside images folder in firebase storage
@@ -293,10 +315,7 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
         newStore.setAddress(pickupAddress);
         System.out.println("####" + getLocationURLFromAddress(CreatingSellerStoreActivity.this, pickupAddress));
         newStore.setLatitude(latitude);
-        newStore.setLongitude(longtitude);
-
-        curLoginUser.setStoreId(storeId);
-        curLoginUser.setStoreName(storeNameTxt.getText().toString().trim());
+        newStore.setLongitude(longitude);
 
         mStores.push().setValue(newStore);
         Toast.makeText(CreatingSellerStoreActivity.this, "Create Store Successfully", Toast.LENGTH_SHORT).show();
@@ -328,7 +347,7 @@ public class CreatingSellerStoreActivity extends AppCompatActivity {
             }
             Address location = address.get(0);
             latitude = location.getLatitude();
-            longtitude = location.getLongitude();
+            longitude = location.getLongitude();
 
             return "http://maps.googleapis.com/maps/api/staticmap?zoom=18&size=560x240&markers=size:mid|color:red|"
                     + location.getLatitude()

@@ -31,7 +31,6 @@ import edu.neu.firebase.wecart.Utils;
 public class SellerHomeFragment extends Fragment implements View.OnClickListener {
 
     private Animation myAnim;
-    private User curLoginUser;
     public SellerHomeFragment() {
         // Required empty public constructor
     }
@@ -42,13 +41,6 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
 
-        // Get the login user
-        curLoginUser =  Common.currentUser;
-        if (curLoginUser == null) {
-            curLoginUser = new User();
-            curLoginUser.setUsername("seller");
-        }
-
         // Greeting sentence
         TextView greetingForCurrentUser = view.findViewById(R.id.currentUserGreetingTextView);
 
@@ -56,7 +48,7 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         String greeting = Utils.showGreetingWordsByCurrentTime();
         StringBuilder greetingInfo = new StringBuilder();
 
-        greetingInfo.append(greeting).append(", ").append(curLoginUser.getUsername());
+        greetingInfo.append(greeting).append(", ").append(Common.currentUser.getUsername());
 
         greetingForCurrentUser.setText(greetingInfo);
 
@@ -64,7 +56,7 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         // If the seller is new, please provide the hint to create a new space.
         // Since id is defined as primitive int, it will be default initialized with 0 and it will never be null.
         TextView sellerInstruction = view.findViewById(R.id.sellerInstructionTextView);
-        if (curLoginUser.getStoreId() == 0) {
+        if (Common.currentUser.getStoreId() == 0) {
             sellerInstruction.setText(R.string.new_seller_instruction);
         } else {
             sellerInstruction.setText(R.string.oldSellerInstruction);
@@ -93,7 +85,7 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnCreateStore) {
-            if (curLoginUser.getStoreId() == 0) {
+            if (Common.currentUser.getStoreId() == 0) {
                 // launch activity
                 Intent intentCreatingStore = new Intent(getActivity(), CreatingSellerStoreActivity.class);
                 requireActivity().startActivity(intentCreatingStore);
@@ -102,25 +94,25 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
             }
         } else if (id == R.id.btnAddProduct) {
             // If the seller does not have a store
-            if (curLoginUser.getStoreId() == 0) {
+            if (Common.currentUser.getStoreId() == 0) {
                 Toast.makeText(getActivity(), "Please create a new store :)", Toast.LENGTH_SHORT).show();
             } else {
                 Intent intentAddingProduct = new Intent(getActivity(), AddingProductActivity.class);
-                intentAddingProduct.putExtra("STORENAME", curLoginUser.getStoreName());
-                intentAddingProduct.putExtra("STOREID", curLoginUser.getStoreId());
+                intentAddingProduct.putExtra("STORENAME", Common.currentUser.getStoreName());
+                intentAddingProduct.putExtra("STOREID", Common.currentUser.getStoreId());
                 requireActivity().startActivity(intentAddingProduct);
             }
         } else if (id == R.id.btnInventory) {
-            if (curLoginUser.getStoreId() == 0) {
+            if (Common.currentUser.getStoreId() == 0) {
                 Toast.makeText(getActivity(), "Please create a new store :)", Toast.LENGTH_SHORT).show();
             } else {
                 Intent intentInventory = new Intent(getActivity(), InventoryActivity.class);
-                intentInventory.putExtra("STORENAME", curLoginUser.getStoreName());
-                intentInventory.putExtra("STOREID", curLoginUser.getStoreId());
+                intentInventory.putExtra("STORENAME", Common.currentUser.getStoreName());
+                intentInventory.putExtra("STOREID", Common.currentUser.getStoreId());
                 requireActivity().startActivity(intentInventory);
             }
         } else if (id == R.id.btnOrderCenter) {
-            if (curLoginUser.getStoreId() == 0) {
+            if (Common.currentUser.getStoreId() == 0) {
                 Toast.makeText(getActivity(), "Please create a new store :)", Toast.LENGTH_SHORT).show();
             } else {
                 // Fragment Transactions: Ref - https://developer.android.com/guide/fragments/transactions?authuser=1

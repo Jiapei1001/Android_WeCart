@@ -38,7 +38,6 @@ public class SellerOrdersFragment extends Fragment {
 
     private FirebaseRecyclerAdapter adapter;
 
-    private User curLoginUser;
     private String storeName;
 
     public SellerOrdersFragment() {
@@ -51,8 +50,7 @@ public class SellerOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_orders, container, false);
 
-        curLoginUser = Common.currentUser;
-        storeName = curLoginUser.getStoreName();
+        storeName = Common.currentUser.getStoreName();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mRequest = mDatabase.child("request");

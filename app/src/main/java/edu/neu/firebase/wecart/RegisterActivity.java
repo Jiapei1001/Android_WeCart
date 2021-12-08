@@ -250,6 +250,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         user.password = password.getText().toString();
                                         user.profile_image = profile_image;
                                         user.uid = uid;
+                                        if (user.user_type.equals("Seller")) {
+                                            user.setStoreId(0);
+                                            user.setStoreName("");
+                                        }
                                         FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(user);
                                         Toast.makeText(RegisterActivity.this, "Success Create", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
