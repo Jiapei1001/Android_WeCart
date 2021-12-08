@@ -74,7 +74,7 @@ public class CustomerSideProductDetailsActivity extends AppCompatActivity {
             storeId = extras.getInt("storeId");
             curProductId = extras.getInt("productId");
             //if (!productId.isEmpty()) {
-                getDetailProduct();
+            getDetailProduct();
             //}
         }
     }

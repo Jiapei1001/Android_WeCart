@@ -86,5 +86,5 @@ dependencies {
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
     // Image view as circle
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
-    
+
 }

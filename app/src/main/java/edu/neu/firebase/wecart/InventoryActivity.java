@@ -173,8 +173,9 @@ public class InventoryActivity extends AppCompatActivity implements ProductCardC
     @Override
     public void onEditProductClick(int position) {
         Intent intentEditProduct = new Intent(this, EditingProductActivity.class);
-        intentEditProduct.putExtra("curProductId", productList.get(position).getProductId());
-
+        intentEditProduct.putExtra("CURPRODUCTID", productList.get(position).getProductId());
+        intentEditProduct.putExtra("STORENAME", currStore);
+        intentEditProduct.putExtra("STOREID", storeId);
         startActivity(intentEditProduct);
     }
 }

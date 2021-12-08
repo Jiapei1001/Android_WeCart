@@ -18,5 +18,6 @@ public class Jump extends AppCompatActivity {
             Intent intent1 = new Intent(Jump.this, CustomerSideProductListActivity.class);
             startActivity(intent1);
         });
+
     }
 }

@@ -5,14 +5,46 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SellerChatFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="533dp"
+        android:background="#FFF8E5"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/msg_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chat" />
-    </RelativeLayout>
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="Please type your question here"
+                android:maxLines="2"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FDA65D"
+                android:text="Send"
+                android:textAllCaps="false"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

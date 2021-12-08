@@ -50,7 +50,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
     FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
 
-    int storeId;
+    int storeId = 1;
 
     TextView txtFullName;
 
@@ -60,8 +60,8 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         setContentView(R.layout.activity_customer_side_product_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle("Grocery");
-            setSupportActionBar(toolbar);
+        toolbar.setTitle("Grocery");
+        setSupportActionBar(toolbar);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference("products");
@@ -81,15 +81,15 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            View headerView = navigationView.getHeaderView(0);
-            txtFullName = headerView.findViewById(R.id.txtFullName);
-            txtFullName.setText(Common.currentUser.getUsername());
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        txtFullName = headerView.findViewById(R.id.txtFullName);
+        txtFullName.setText(Common.currentUser.getUsername());
 
 
         recyclerView = findViewById(R.id.recycler_product);
@@ -98,8 +98,8 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
 
         if(getIntent() != null){
-            storeId = this.getIntent().getIntExtra("storeId", 0);
-                loadProduct(storeId);
+            //storeId = this.getIntent().getIntExtra("storeId", 0);
+            loadProduct(storeId);
         }
 
     }

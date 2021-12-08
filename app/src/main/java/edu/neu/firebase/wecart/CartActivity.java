@@ -75,18 +75,16 @@ public class CartActivity extends AppCompatActivity {
                         cart, storeName, storeId
                 );
 
-
                 if(tempTotal != 0.0) {
                     //submit to firebase
                     requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
                     //Delete Cart
                     new Database(getBaseContext()).cleanCart();
-                    Toast.makeText(CartActivity.this,"Successfully Ordered!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Successfully Ordered!", Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else {
-                    Toast.makeText(CartActivity.this,"Cart is empty",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CartActivity.this, "Cart is empty", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -119,7 +117,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void loadListProduct() {
         cart = new Database(this).getCarts();
-        adapter = new CartAdapter(cart,this);
+        adapter = new CartAdapter(cart, this);
         recyclerView.setAdapter(adapter);
 
 
@@ -128,7 +126,7 @@ public class CartActivity extends AppCompatActivity {
         for(Order order:cart)
             total+=(Double.parseDouble(order.getPrice()))*(Double.parseDouble(order.getQuantity()));
         tempTotal = total;
-        Locale locale = new Locale("en","US");
+        Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         txtTotalPrice.setText(fmt.format(total));

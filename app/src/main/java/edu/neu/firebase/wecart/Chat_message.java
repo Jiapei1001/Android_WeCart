@@ -35,3 +35,4 @@ public class Chat_message {
         this.type = type;
     }
 }
+

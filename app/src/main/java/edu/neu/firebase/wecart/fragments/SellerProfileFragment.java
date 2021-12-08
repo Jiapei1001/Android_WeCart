@@ -1,15 +1,14 @@
 package edu.neu.firebase.wecart.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.util.Objects;
-
 import edu.neu.firebase.wecart.Common;
-import edu.neu.firebase.wecart.GlideApp;
 import edu.neu.firebase.wecart.R;
 import edu.neu.firebase.wecart.User;
 import edu.neu.firebase.wecart.market.Store;
@@ -73,7 +69,7 @@ public class SellerProfileFragment extends Fragment {
                     // store btn
                     ImageView storeBtn = view.findViewById(R.id.storeDetailBtn);
                     StorageReference storeBtnOnline = storageRef.child(String.valueOf(currStore.getStoreBtn()));
-                    GlideApp.with(requireActivity()).load(storeBtnOnline).into(storeBtn);
+                    Glide.with(requireActivity()).load(storeBtnOnline).into(storeBtn);
 
                     // name
                     TextView storeName = view.findViewById(R.id.storeDetailName);
@@ -97,7 +93,7 @@ public class SellerProfileFragment extends Fragment {
                     TextView meetOwner = view.findViewById(R.id.storeOwner);
                     meetOwner.setText("meet:    " + currStore.getOwnerName());
 
-                    // address
+                    // pick up: address
                     TextView storeAddress = view.findViewById(R.id.storeAddress);
                     storeAddress.setText(currStore.getAddress());
 

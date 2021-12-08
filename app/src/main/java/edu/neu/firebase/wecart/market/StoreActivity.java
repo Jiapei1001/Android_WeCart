@@ -21,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import edu.neu.firebase.wecart.GlideApp;
 import edu.neu.firebase.wecart.R;
 
 public class StoreActivity extends AppCompatActivity {
@@ -32,17 +31,10 @@ public class StoreActivity extends AppCompatActivity {
 
     DatabaseReference stores;
 
-    Query query;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
-
-        stores = FirebaseDatabase.getInstance().getReference();
-        query = stores.child("stores");
-
-
 
         currStoreId = Integer.parseInt(getIntent().getStringExtra("storeId"));
         marketId = String.valueOf(getIntent().getStringExtra("marketId"));
@@ -78,7 +70,7 @@ public class StoreActivity extends AppCompatActivity {
                     // store btn
                     ImageView storeBtn = findViewById(R.id.storeDetailBtn);
                     StorageReference storeBtnOnline = storageRef.child(String.valueOf(currStore.getStoreBtn()));
-                    GlideApp.with(getApplicationContext()).load(storeBtnOnline).into(storeBtn);
+                    Glide.with(getApplicationContext()).load(storeBtnOnline).into(storeBtn);
 
                     // name
                     TextView storeName = findViewById(R.id.storeDetailName);

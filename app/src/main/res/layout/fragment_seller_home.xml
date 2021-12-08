@@ -11,26 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--code for wave animation-->
-
-        <!--            android:layout_gravity="fill"-->
-        <!--            android:layout_marginTop="136dp"-->
-        <!--            android:background="@drawable/market_01"-->
-
-        <!--            app:backgroundTint="@null"-->
-
         <com.scwang.wave.MultiWaveHeader
             android:id="@+id/waveHeader"
             android:layout_width="412dp"
             android:layout_height="126dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="604dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:mwhCloseColor="#71DFE7"
             app:mwhStartColor="#C2FFF9"
             app:mwhWaveHeight="60dp" />
@@ -41,8 +32,8 @@
             android:layout_height="47dp"
             android:layout_marginBottom="300dp"
             android:fontFamily="@font/merriweather_blackitalic"
-            android:gravity="center"
             android:text="Home"
+            android:gravity="center"
             android:textColor="#E26A2C"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,8 +48,8 @@
             android:layout_width="281dp"
             android:layout_height="45dp"
             android:fontFamily="@font/merriweather_blackitalic"
-            android:gravity="center"
             android:text="Hello"
+            android:gravity="center"
             android:textColor="#344CB7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +62,8 @@
             android:layout_width="317dp"
             android:layout_height="56dp"
             android:fontFamily="@font/merriweather_blackitalic"
-            android:gravity="center"
             android:text="Instructions"
+            android:gravity="center"
             android:textColor="#116530"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
