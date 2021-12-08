@@ -1,5 +1,9 @@
 package edu.neu.firebase.wecart;
 
+import android.location.Geocoder;
+
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.Calendar;
 
 public class Utils {

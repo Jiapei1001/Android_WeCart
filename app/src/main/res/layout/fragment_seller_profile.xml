@@ -81,7 +81,7 @@
                     android:gravity="center|top"
                     android:inputType="textMultiLine"
                     android:singleLine="false"
-                    android:text="@string/storeDesc"
+                    android:text="Store Description"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

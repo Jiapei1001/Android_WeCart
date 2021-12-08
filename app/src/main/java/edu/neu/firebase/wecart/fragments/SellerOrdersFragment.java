@@ -39,7 +39,7 @@ public class SellerOrdersFragment extends Fragment {
     private FirebaseRecyclerAdapter adapter;
 
     private User curLoginUser;
-    String storeName;
+    private String storeName;
 
     public SellerOrdersFragment() {
         // Required empty public constructor

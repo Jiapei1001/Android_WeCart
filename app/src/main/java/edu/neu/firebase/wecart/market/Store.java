@@ -11,9 +11,10 @@ public class Store {
     private Double longitude;
     private String ownerImage;
     private String ownerName;
-    private String address;
+    private String address; // pickup address
     private String email;
     private String phone;
+    private String storeAddress;
 
     public Store() {
         // default constructor
@@ -113,6 +114,14 @@ public class Store {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getStoreAddress() {
+        return storeAddress;
+    }
+
+    public void setStoreAddress(String storeAddress) {
+        this.storeAddress = storeAddress;
     }
 
     @Override

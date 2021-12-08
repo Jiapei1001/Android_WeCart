@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,16 +70,21 @@ public class EditingProductActivity extends AppCompatActivity implements Adapter
 
     private Product product;
 
+    private String storeName;
+    private int storeId;
+
+    User curLoginUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editing_product);
 
-        // Todo: change store
-        String productStore = "Super QQ Fruit Store";
+        storeName = this.getIntent().getStringExtra("STORENAME");
+        storeId = this.getIntent().getIntExtra("STOREID", 0);
 
         // Retrieve curProductId from previous activity ImportingProductActivity
-        curProductId = getIntent().getIntExtra("curProductId", 0);
+        curProductId = getIntent().getIntExtra("CURPRODUCTID", 0);
 
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
@@ -96,7 +104,7 @@ public class EditingProductActivity extends AppCompatActivity implements Adapter
         inStockTxt = findViewById(R.id.textViewInStock);
 
         productStoreTxt = findViewById(R.id.textViewStore);
-        productStoreTxt.setText(productStore);
+        productStoreTxt.setText(storeName);
 
         // Using spinners to do the product unit Choice
         // Take the instance of Spinner and apply OnItemSelectedListener on it which tells which item
@@ -116,7 +124,8 @@ public class EditingProductActivity extends AppCompatActivity implements Adapter
         // create a new product
         product = new Product();
 
-        product.setProductStore(productStore);
+        product.setProductStore(storeName);
+        product.setStoreId(storeId);
 
         getProductData();
 
@@ -141,8 +150,9 @@ public class EditingProductActivity extends AppCompatActivity implements Adapter
 
     private void getProductData() {
 
-        // Check if the product exists in firebase database by the product id
-        Query query = mProducts.orderByChild("productId").equalTo(curProductId);
+        String storeIdToProductId = storeId + "_" + curProductId;
+        // Check if the product exists in firebase database by the product id and store id
+        Query query = mProducts.orderByChild("storeIdToProductId").equalTo(storeIdToProductId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -202,7 +212,7 @@ public class EditingProductActivity extends AppCompatActivity implements Adapter
                     } else if (!existedProduct.getProductUnit().equals(product.getProductUnit())) {
                         mProducts.child(key).child("productUnit").setValue(product.getProductUnit());
                         // TODO: update product image (check if the image is the same one)
-                    } else if (!existedProduct.getProductImageId().equals(product.getProductImageId())) {
+                    } else if (!existedProduct.getProductImageId().equals(product.getProductImageId()) || existedProduct.getProductImageId() == null) {
                         mProducts.child(key).child("productImageId").setValue(product.getProductImageId());
                     }
                     Toast.makeText(EditingProductActivity.this, "Product Information was Updated Successfully.", Toast.LENGTH_SHORT).show();

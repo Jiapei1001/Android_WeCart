@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,14 +62,13 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
     private Product existedProduct;
 
     private FirebaseStorage storage;
+    private StorageReference mStorageRef;
     private DatabaseReference mDatabase; //for insert database object value
     private DatabaseReference mProducts;
 
     private Uri productImageUri;
 
     private String productImageId;
-
-    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +171,7 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        // Upload the image to firebase storage
+        // Upload the images and product data to firebase storage
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -317,8 +317,8 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
 
         int curProductId = Integer.parseInt(productIdTxt.getText().toString());
         product.setProductId(curProductId);
-
         product.setStoreIdToProduct(storeId + "_" + curProductId);
+
         // Set product name and brand
         product.setProductName(productNameTxt.getText().toString().trim());
         product.setProductBrand(productBrandTxt.getText().toString().trim());
@@ -341,6 +341,10 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
             updateProductData();
         } else {
             mProducts.push().setValue(product);
+            // Clear all imageView and EditTxt
+            productImage.setImageDrawable(null);
+            priceTxt.setText("");
+            clearForm((ViewGroup) findViewById(R.id.linearlayoutForTextView));
         }
     }
 
@@ -369,5 +373,15 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void clearForm(ViewGroup group) {
+        for (int i = 0, count = group.getChildCount(); i < count; ++i) {
+            View view = group.getChildAt(i);
+            if (view instanceof EditText) {
+                ((EditText)view).setText("");
+            }
+
+        }
     }
 }

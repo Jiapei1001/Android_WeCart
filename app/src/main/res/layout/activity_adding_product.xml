@@ -19,10 +19,6 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <!--Button for choosing image from gallery-->
-
-        <!--Button for uploading image-->
-
         <Button
             android:id="@+id/btnSelectProduct"
             android:layout_width="0dp"
@@ -67,7 +63,7 @@
         android:layout_marginEnd="120dp" />
 
     <LinearLayout
-        android:id="@+id/linearlayout"
+        android:id="@+id/linearlayoutForTextView"
         android:layout_width="359dp"
         android:layout_height="435dp"
         android:layout_below="@+id/imgViewProduct"

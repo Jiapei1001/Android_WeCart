@@ -32,7 +32,6 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
 
     private Animation myAnim;
     private User curLoginUser;
-
     public SellerHomeFragment() {
         // Required empty public constructor
     }
@@ -45,6 +44,10 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
 
         // Get the login user
         curLoginUser =  Common.currentUser;
+        if (curLoginUser == null) {
+            curLoginUser = new User();
+            curLoginUser.setUsername("seller");
+        }
 
         // Greeting sentence
         TextView greetingForCurrentUser = view.findViewById(R.id.currentUserGreetingTextView);
@@ -52,6 +55,7 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         // Get the greeting sentence according to the current time
         String greeting = Utils.showGreetingWordsByCurrentTime();
         StringBuilder greetingInfo = new StringBuilder();
+
         greetingInfo.append(greeting).append(", ").append(curLoginUser.getUsername());
 
         greetingForCurrentUser.setText(greetingInfo);
@@ -69,6 +73,9 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         myAnim = AnimationUtils.loadAnimation(getContext(), R.anim.milkshake);
 
         // Implement OnClickListener() for buttons
+        Button creatingStoreButton = view.findViewById(R.id.btnCreateStore);
+        creatingStoreButton.setOnClickListener(this);
+        creatingStoreButton.setAnimation(myAnim);
         Button addingProductButton = view.findViewById(R.id.btnAddProduct);
         addingProductButton.setOnClickListener(this);
         addingProductButton.setAnimation(myAnim);
@@ -89,7 +96,7 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
             if (curLoginUser.getStoreId() == 0) {
                 // launch activity
                 Intent intentCreatingStore = new Intent(getActivity(), CreatingSellerStoreActivity.class);
-                startActivity(intentCreatingStore);
+                requireActivity().startActivity(intentCreatingStore);
             } else {
                 Toast.makeText(getActivity(), "One login seller cannot create more than one stores", Toast.LENGTH_SHORT).show();
             }
@@ -113,16 +120,16 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
                 requireActivity().startActivity(intentInventory);
             }
         } else if (id == R.id.btnOrderCenter) {
-            // Fragment Transactions: Ref - https://developer.android.com/guide/fragments/transactions?authuser=1
-            //
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.navHostFragment, SellerOrdersFragment.class, null); //My second Fragment
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-//            getActivity().getActionBar().setTitle("Home");
-//            Intent intentOrderCenter = new Intent(getActivity(), SellerOrdersFragment.class);
-//            requireActivity().startActivity(intentOrderCenter);
+            if (curLoginUser.getStoreId() == 0) {
+                Toast.makeText(getActivity(), "Please create a new store :)", Toast.LENGTH_SHORT).show();
+            } else {
+                // Fragment Transactions: Ref - https://developer.android.com/guide/fragments/transactions?authuser=1
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.navHostFragment, SellerOrdersFragment.class, null); //My second Fragment
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
         }
         v.startAnimation(myAnim);
 

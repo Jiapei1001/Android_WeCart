@@ -11,14 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--code for wave animation-->
-
-        <!--            android:layout_gravity="fill"-->
-        <!--            android:layout_marginTop="136dp"-->
-        <!--            android:background="@drawable/market_01"-->
-
-        <!--            app:backgroundTint="@null"-->
-
         <com.scwang.wave.MultiWaveHeader
             android:id="@+id/waveHeader"
             android:layout_width="412dp"
