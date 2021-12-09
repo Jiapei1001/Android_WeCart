@@ -46,8 +46,8 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         // Todo: storeName, storeId
-        String storeName = "Super QQ Fruit Store";
-        int storeId = 2;
+        String storeName = "Mary's County Ranch";
+        int storeId = 1;
 
         //Firebase
         database = FirebaseDatabase.getInstance();
@@ -69,13 +69,12 @@ public class CartActivity extends AppCompatActivity {
                 buttonEffect(view);
 
                 Request request = new Request(
-
-                        Common.currentUser.getUid(),
+                        Common.currentUser.getUsername(),
                         txtTotalPrice.getText().toString(),
                         cart, storeName, storeId
                 );
 
-                if(tempTotal != 0.0) {
+                if (tempTotal != 0.0) {
                     //submit to firebase
                     requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
@@ -123,8 +122,8 @@ public class CartActivity extends AppCompatActivity {
 
         //Calculate price
         double total = 0.0;
-        for(Order order:cart)
-            total+=(Double.parseDouble(order.getPrice()))*(Double.parseDouble(order.getQuantity()));
+        for (Order order : cart)
+            total += (Double.parseDouble(order.getPrice())) * (Double.parseDouble(order.getQuantity()));
         tempTotal = total;
         Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
