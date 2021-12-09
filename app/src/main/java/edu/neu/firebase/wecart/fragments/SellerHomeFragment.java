@@ -48,7 +48,12 @@ public class SellerHomeFragment extends Fragment implements View.OnClickListener
         String greeting = Utils.showGreetingWordsByCurrentTime();
         StringBuilder greetingInfo = new StringBuilder();
 
-        greetingInfo.append(greeting).append(", ").append(Common.currentUser.getUsername());
+        greetingInfo.append(greeting).append(", ").append(Common.currentUser.getUsername()).append("! ");
+
+        // If seller is not the new one
+        if (Common.currentUser.getStoreId() != 0) {
+            greetingInfo.append("Welcome to your store- ").append(Common.currentUser.getStoreName());
+        }
 
         greetingForCurrentUser.setText(greetingInfo);
 
