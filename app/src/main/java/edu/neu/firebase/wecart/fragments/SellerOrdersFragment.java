@@ -1,5 +1,6 @@
 package edu.neu.firebase.wecart.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -85,9 +86,8 @@ public class SellerOrdersFragment extends Fragment {
 
         adapter = new FirebaseRecyclerAdapter<Request, SellerOrdersViewHolder>(options){
 
-
             @Override
-            protected void onBindViewHolder(@NonNull SellerOrdersViewHolder holder, int position, @NonNull Request model) {
+            protected void onBindViewHolder(@NonNull SellerOrdersViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Request model) {
                 holder.txtOrderId.setText(adapter.getRef(position).getKey());
                 holder.txtOrderStatus.setText(convertCodeToStates(model.getStatus()));
                 //final Request clickItem = model;
@@ -99,6 +99,7 @@ public class SellerOrdersFragment extends Fragment {
                         intentCheckOrder.putExtra("ORDERKEY", adapter.getRef(position).getKey());
                         intentCheckOrder.putExtra("ORDERSTATUS", model.getStatus());
                         startActivity(intentCheckOrder);
+                        adapter.notifyItemChanged(position);
                     }
 
                     @Override
@@ -106,7 +107,7 @@ public class SellerOrdersFragment extends Fragment {
                         // change order status to "delivered"
                         mRequest.child(Objects.requireNonNull(adapter.getRef(position).getKey())).child("status").setValue("shipped");
                         Toast.makeText(getActivity(), "The order has shipped.", Toast.LENGTH_SHORT).show();
-
+                        adapter.notifyItemChanged(position);
                     }
 
                     @Override
@@ -134,8 +135,11 @@ public class SellerOrdersFragment extends Fragment {
 
         if ("ordered".equals(status)) {
             return "Order Placed";
-        }else
+        }else if ("pending".equals(status)) {
             return "Pending Order";
+        } else {
+            return "Shipped Order";
+        }
     }
 
 
