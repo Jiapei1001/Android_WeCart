@@ -1,5 +1,6 @@
 package edu.neu.firebase.wecart.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,8 @@ import edu.neu.firebase.wecart.ItemClickListener;
 import edu.neu.firebase.wecart.OrderViewHolder;
 import edu.neu.firebase.wecart.R;
 import edu.neu.firebase.wecart.Request;
+import edu.neu.firebase.wecart.SellerCheckOrderDetailActivity;
+import edu.neu.firebase.wecart.SellerItemClickListener;
 import edu.neu.firebase.wecart.SellerOrdersViewHolder;
 import edu.neu.firebase.wecart.User;
 
@@ -87,9 +90,22 @@ public class SellerOrdersFragment extends Fragment {
                 holder.txtOrderId.setText(adapter.getRef(position).getKey());
                 holder.txtOrderStatus.setText(convertCodeToStates(model.getStatus()));
                 //final Request clickItem = model;
-                holder.setItemClickListener(new ItemClickListener() {
+                holder.setSellerItemClickListener(new SellerItemClickListener() {
+
+                    @Override
+                    public void onCheckOrderClick(int position) {
+                        Intent intentCheckOrder = new Intent(getActivity(), SellerCheckOrderDetailActivity.class);
+                        startActivity(intentCheckOrder);
+                    }
+
+                    @Override
+                    public void onDeliverToPickupClick(int postions) {
+                        // change order status to "delivered"
+                    }
+
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
+
                     }
                 });
             }

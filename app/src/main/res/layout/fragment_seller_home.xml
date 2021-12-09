@@ -45,7 +45,7 @@
         <TextView
             android:id="@+id/currentUserGreetingTextView"
             android:layout_width="281dp"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/merriweather_blackitalic"
             android:text="Hello"
             android:gravity="center"
