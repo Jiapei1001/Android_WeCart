@@ -11,24 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
+import edu.neu.firebase.wecart.AddingProductActivity;
 import edu.neu.firebase.wecart.Common;
-import edu.neu.firebase.wecart.ItemClickListener;
-import edu.neu.firebase.wecart.OrderViewHolder;
 import edu.neu.firebase.wecart.R;
 import edu.neu.firebase.wecart.Request;
 import edu.neu.firebase.wecart.SellerCheckOrderDetailActivity;
 import edu.neu.firebase.wecart.SellerItemClickListener;
 import edu.neu.firebase.wecart.SellerOrdersViewHolder;
-import edu.neu.firebase.wecart.User;
 
 public class SellerOrdersFragment extends Fragment {
 
@@ -42,6 +42,7 @@ public class SellerOrdersFragment extends Fragment {
     private FirebaseRecyclerAdapter adapter;
 
     private String storeName;
+    private String orderName;
 
     public SellerOrdersFragment() {
         // Required empty public constructor
@@ -95,12 +96,17 @@ public class SellerOrdersFragment extends Fragment {
                     @Override
                     public void onCheckOrderClick(int position) {
                         Intent intentCheckOrder = new Intent(getActivity(), SellerCheckOrderDetailActivity.class);
+                        intentCheckOrder.putExtra("ORDERKEY", adapter.getRef(position).getKey());
+                        intentCheckOrder.putExtra("ORDERSTATUS", model.getStatus());
                         startActivity(intentCheckOrder);
                     }
 
                     @Override
                     public void onDeliverToPickupClick(int postions) {
                         // change order status to "delivered"
+                        mRequest.child(Objects.requireNonNull(adapter.getRef(position).getKey())).child("status").setValue("shipped");
+                        Toast.makeText(getActivity(), "The order has shipped.", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override

@@ -89,8 +89,11 @@ public class OrderStatusActivity extends AppCompatActivity {
 
         if ("ordered".equals(status)) {
             return "Order Placed";
-        }else
+        } else if ("pending".equals(status)) {
             return "Pending Order";
+        } else {
+            return "Shipped Order";
+        }
     }
 
 
