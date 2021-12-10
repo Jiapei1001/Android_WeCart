@@ -51,8 +51,6 @@ public class SellerProfileFragment extends Fragment {
         // get current store Id
         currStoreId = curLoginUser.getStoreId();
 
-        // Todo: Check if there is no store for the seller
-
         storageRef = FirebaseStorage.getInstance().getReference();
 
         mStores = FirebaseDatabase.getInstance().getReference().child("stores");
