@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import edu.neu.firebase.wecart.CustomerSideProductListActivity;
 import edu.neu.firebase.wecart.R;
 
 public class StoreActivity extends AppCompatActivity {
