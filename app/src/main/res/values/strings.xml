@@ -4,7 +4,7 @@
     <string name="submit">Submit</string>
     <string name="price">Price</string>
     <string name="brand">Brand</string>
-    <string name="not_in_stock_message">The product is in not stock.</string>
+    <string name="not_in_stock_message">The product is not in stock.</string>
     <string name="in_stock_message">The product is in stock, please edit the info below</string>
     <string name="title_activity_importing_product">ImportingProductActivity</string>
     <!-- Strings used for fragments for navigation -->
