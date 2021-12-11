@@ -2,6 +2,17 @@
 
 Team Member: Yongzheng Qi, Qiangqiang Zhang, Yu Fu, Jiapei Li
 
+## Log in & sign up
+### log in
+<div>
+  <img width="301" alt="Screen Shot 2021-12-10 at 1 56 08 PM" src="https://github.com/Jiapei1001/WeCart/blob/main/app/src/main/res/drawable/Log%20in.png">
+</div>
+### sign up
+<div>
+  <img width="301" alt="Screen Shot 2021-12-10 at 1 56 08 PM" src="https://github.com/Jiapei1001/WeCart/blob/main/app/src/main/res/drawable/sign_up.png">
+</div>
+
+
 ## Customer Side
 ### Customer-Side Product List Screen
 <div>
@@ -57,5 +68,9 @@ Team Member: Yongzheng Qi, Qiangqiang Zhang, Yu Fu, Jiapei Li
 ### Seller-Side Chat Screen
 <div>
   <img width="300" alt="Screen Shot 2021-12-10 at 1 57 48 PM" src="https://user-images.githubusercontent.com/60984454/145668921-0f82e8c3-b7c7-45e7-a54f-aefa9e62c2b7.png">
+</div>
+### Notification
+<div>
+  <img width="300" alt="Screen Shot 2021-12-10 at 1 57 48 PM" src="https://github.com/Jiapei1001/WeCart/blob/main/app/src/main/res/drawable/noti.png">
 </div>
 
