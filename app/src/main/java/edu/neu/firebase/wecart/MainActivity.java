@@ -52,21 +52,6 @@ public class MainActivity extends AppCompatActivity {
         name = findViewById(R.id.editUsername);   //Get the username
         passwd = findViewById(R.id.editPassword);     //get the Password
 
-
-        // temp button for market, will remove
-        Button marketBtn = (Button) findViewById(R.id.marketBtn);
-        marketBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, Market01Activity.class);
-            startActivity(intent);
-        });
-
-        // temp button for store, will remove
-        Button storeBtn = (Button) findViewById(R.id.storeBtn);
-        storeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, StoreActivity.class);
-            startActivity(intent);
-        });
-
         Button button1 = findViewById(R.id.button_register);
         Button button2 = findViewById(R.id.button_login);
 
@@ -105,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(sellerHomeIntent);
                                         finish();
                                     } else {
-                                        Intent homeIntent = new Intent(MainActivity.this, Jump.class);
+                                        Intent homeIntent = new Intent(MainActivity.this, Market01Activity.class);
                                         Common.currentUser = loginUser;
                                         startActivity(homeIntent);
                                         finish();
