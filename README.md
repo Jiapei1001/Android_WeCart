@@ -9,9 +9,8 @@ Team Member: Yongzheng Qi, Qiangqiang Zhang, Yu Fu, Jiapei Li
 </div>
 ### sign up
 <div>
-  <img width="301" alt="Screen Shot 2021-12-10 at 1 56 08 PM" src="https://github.com/Jiapei1001/WeCart/blob/main/app/src/main/res/drawable/sign_up.png">
+  <img width="301" alt="Screen Shot 2021-12-10 at 1 56 08 PM" src="https://user-images.githubusercontent.com/34133445/145692774-992e037b-8700-47a5-84a7-2799af997a1e.png">
 </div>
-
 
 ## Customer Side
 ### Customer-Side Marketplace Screen
