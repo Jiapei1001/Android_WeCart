@@ -50,7 +50,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
     FirebaseRecyclerAdapter<Product,ProductViewHolder> adapter;
 
-    int storeId = 1;
+    int storeId;
 
     TextView txtFullName;
 
@@ -95,7 +95,7 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
 
 
         if(getIntent() != null){
-            //storeId = this.getIntent().getIntExtra("storeId", 0);
+            storeId = this.getIntent().getIntExtra("storeId", 0);
             loadProduct(storeId);
         }
 
