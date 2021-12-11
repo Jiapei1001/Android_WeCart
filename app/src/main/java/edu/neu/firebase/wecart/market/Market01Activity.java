@@ -38,6 +38,10 @@ public class Market01Activity extends AppCompatActivity {
                 storeId = idToString(R.id.store5);
                 openClickyActivity(storeId);
                 break;
+            case R.id.nextCommunity:
+                Intent intent = new Intent(this, Market02Activity.class);
+                startActivity(intent);
+                break;
         }
     }
 

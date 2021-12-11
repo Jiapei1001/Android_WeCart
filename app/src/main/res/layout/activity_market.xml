@@ -122,12 +122,13 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:rotation="-30"
                 android:background="@android:color/transparent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="onClick"
+                android:rotation="-30"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/arrow" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
