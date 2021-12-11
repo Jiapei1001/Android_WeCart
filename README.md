@@ -14,6 +14,11 @@ Team Member: Yongzheng Qi, Qiangqiang Zhang, Yu Fu, Jiapei Li
 
 
 ## Customer Side
+### Customer-Side Marketplace Screen
+<div>
+  <img width="301" alt="Screen Shot 2021-12-10 at 1 56 08 PM" src="https://user-images.githubusercontent.com/78562561/145647095-d225c8aa-73bd-4149-b6bd-43f81616f56f.png">
+</div>
+
 ### Customer-Side Product List Screen
 <div>
   <img width="301" alt="Screen Shot 2021-12-10 at 1 56 08 PM" src="https://user-images.githubusercontent.com/78562561/145647095-d225c8aa-73bd-4149-b6bd-43f81616f56f.png">
