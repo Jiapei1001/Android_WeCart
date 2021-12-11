@@ -53,7 +53,7 @@ public class SellerProfileFragment extends Fragment {
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        mStores = FirebaseDatabase.getInstance().getReference().child("stores");
+        mStores = FirebaseDatabase.getInstance().getReference().child("market01");
 
         Query query = mStores.orderByChild("storeId").equalTo(currStoreId);
 

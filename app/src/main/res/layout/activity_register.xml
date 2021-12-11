@@ -26,7 +26,7 @@
             android:layout_width="207dp"
             android:layout_height="45dp"
             android:ems="10"
-            android:text="Please choose your user type："
+            android:text="Click picture to upload your icon："
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"

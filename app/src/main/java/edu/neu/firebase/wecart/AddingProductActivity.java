@@ -233,6 +233,10 @@ public class AddingProductActivity extends AppCompatActivity implements AdapterV
                 } else {
                     existedProduct = null;
                     inStockTxt.setText(R.string.not_in_stock_message);
+                    // Clear all imageView and EditTxt
+                    productImage.setImageDrawable(null);
+                    priceTxt.setText("");
+                    clearForm((ViewGroup) findViewById(R.id.linearlayoutForTextView));
                 }
             }
 

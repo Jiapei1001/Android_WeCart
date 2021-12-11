@@ -4,7 +4,7 @@
     <string name="submit">Submit</string>
     <string name="price">Price</string>
     <string name="brand">Brand</string>
-    <string name="not_in_stock_message">The product is in not stock.</string>
+    <string name="not_in_stock_message">The product is not in stock.</string>
     <string name="in_stock_message">The product is in stock, please edit the info below</string>
     <string name="title_activity_importing_product">ImportingProductActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -47,4 +47,5 @@
     <string name="new_seller_instruction">Since you are the new seller, please create a new store</string>
     <string name="oldSellerInstruction">Add more product and check your orders … </string>
     <string name="please_type_your_question_here">Please type your question here</string>
+    <string name="community_in_construction">This community market is in construction.\n\nHappy New Year! See you in 2022:)</string>
 </resources>

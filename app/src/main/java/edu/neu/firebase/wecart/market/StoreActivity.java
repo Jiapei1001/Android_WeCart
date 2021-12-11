@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import edu.neu.firebase.wecart.CustomerSideProductListActivity;
 import edu.neu.firebase.wecart.R;
 
 public class StoreActivity extends AppCompatActivity {
@@ -53,6 +54,15 @@ public class StoreActivity extends AppCompatActivity {
             }
         });
 
+        ImageView goToProductBtn = findViewById(R.id.storeMakeOrder);
+        goToProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CustomerSideProductListActivity.class);
+                intent.putExtra("storeId", currStoreId);
+                startActivity(intent);
+            }
+        });
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
