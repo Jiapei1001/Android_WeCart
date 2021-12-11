@@ -15,16 +15,16 @@ Team Member: Yongzheng Qi, Qiangqiang Zhang, Yu Fu, Jiapei Li
 
 ## Customer Side
 ### Customer-Side Marketplace Screen
+<div>
 <img width="301" alt="marketplace_02" src="https://user-images.githubusercontent.com/20607583/145691546-f232f0e0-ce1e-42fb-bd7c-33b49469e32c.png">
-
-### Customer-Side Marketplace Screen
 <img width="301" alt="marketplace_03" src="https://user-images.githubusercontent.com/20607583/145691559-3d517b2f-0489-4946-a911-22dd4c480afe.png">
+</div>
 
 ### Customer-Side Store Screen
+<div>
 <img width="301" alt="store_01" src="https://user-images.githubusercontent.com/20607583/145691569-98df14e5-c0a0-41ce-8bea-cbf290ef56ac.png">
-
-### Customer-Side Store Screen
 <img width="301" alt="store_02" src="https://user-images.githubusercontent.com/20607583/145691578-683a5fc8-8b89-47e2-bf34-613ace3ae51a.png">
+</div>
 
 ### Customer-Side Product List Screen
 <div>
