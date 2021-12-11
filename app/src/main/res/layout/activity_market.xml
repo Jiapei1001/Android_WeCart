@@ -116,6 +116,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/store_go_back" />
 
+            <ImageView
+                android:id="@+id/nextCommunity"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:rotation="-30"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/arrow" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
