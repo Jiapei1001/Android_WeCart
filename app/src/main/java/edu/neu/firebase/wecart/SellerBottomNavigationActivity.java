@@ -1,4 +1,4 @@
-package edu.neu.firebase.wecart;
+package edu.neu.firebase.wecart.seller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -9,6 +9,8 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import edu.neu.firebase.wecart.R;
 
 public class SellerBottomNavigationActivity extends AppCompatActivity {
 
