@@ -7,6 +7,27 @@
     android:layout_height="fill_parent"
     tools:context=".market.StoreActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:translationZ="90dp">
+
+        <ImageView
+            android:id="@+id/storeGoToMarket"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="40dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toBottomOf="parent"
+            app:srcCompat="@drawable/store_go_community" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:id="@+id/storeScrollView"
         android:layout_width="match_parent"
@@ -175,19 +196,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/storeMakeOrder"
                 app:srcCompat="@drawable/store_go_back" />
 
-            <ImageView
-                android:id="@+id/storeGoToMarket"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
-                android:background="@android:color/transparent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.94"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/storeMakeOrder"
-                app:srcCompat="@drawable/store_go_community" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
