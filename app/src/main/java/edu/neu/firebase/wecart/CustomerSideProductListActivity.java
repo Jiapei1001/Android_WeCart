@@ -93,7 +93,6 @@ public class CustomerSideProductListActivity extends AppCompatActivity implement
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         if(getIntent() != null){
             storeId = this.getIntent().getIntExtra("storeId", 0);
             loadProduct(storeId);
